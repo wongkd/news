@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI HOT 每日精选</title>
+<style>
+  :root {
+    --bg: #f0f2f8;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --sub: #6b7280;
+    --accent: #6366f1;
+    --accent-light: #eef2ff;
+    --border: #e5e7eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0a14;
+      --card: #141428;
+      --text: #e5e7eb;
+      --sub: #9ca3af;
+      --accent: #818cf8;
+      --accent-light: #1e1b4b;
+      --border: #2d2d4a;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Top Nav Bar ── */
+  .navbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(12px);
+  }
+  .navbar .brand {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .navbar .logo {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px; font-weight: 700;
+  }
+  .navbar .title {
+    font-size: 17px; font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .navbar .badge {
+    font-size: 11px; background: var(--accent-light);
+    color: var(--accent); padding: 2px 10px; border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* ── Status bar ── */
+  .status-bar {
+    margin: 0 16px 0;
+    padding: 10px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: var(--sub);
+    transform: translateY(-6px);
+  }
+  .status-bar .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .status-bar .refresh {
+    color: var(--accent); font-size: 12px; cursor: pointer;
+    background: none; border: none; font-family: inherit;
+  }
+
+  /* ── Content iframe ── */
+  .frame-wrap {
+    margin: 0 16px 20px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  iframe {
+    width: 100%; min-height: 100vh; border: none;
+    display: block;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; padding: 20px 16px 40px;
+    font-size: 12px; color: var(--sub);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── Mobile tweaks ── */
+  @media (max-width: 480px) {
+    .navbar { padding: 10px 14px; }
+    .navbar .title { font-size: 15px; }
+    .frame-wrap { margin: 0 8px 12px; border-radius: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="brand">
+    <div class="logo">H</div>
+    <span class="title">AI HOT 每日精选</span>
+  </div>
+  <span class="badge" id="dateBadge">加载中…</span>
+</div>
+
+<div class="status-bar">
+  <span><span class="dot"></span> 简报已就绪</span>
+  <button class="refresh" onclick="location.reload()">↻ 刷新</button>
+</div>
+
+<div class="frame-wrap">
+  <iframe id="briefingFrame" src="briefing.html" title="AI HOT 精选简报"
+          sandbox="allow-same-origin allow-scripts"
+          onload="onFrameLoad()" onerror="onFrameError()">
+  </iframe>
+</div>
+
+<div class="footer">
+  数据来源 <a href="https://aihot.virxact.com" target="_blank">aihot.virxact.com</a> · 每日 08:00 自动更新
+</div>
+
+<script>
+  // ── Update date badge ──
+  const now = new Date();
+  const bj = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  const y = bj.getUTCFullYear();
+  const m = String(bj.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(bj.getUTCDate()).padStart(2, '0');
+  document.getElementById('dateBadge').textContent = `${y}/${m}/${d}`;
+
+  // ── Frame load/error handlers ──
+  function onFrameLoad() {
+    try {
+      // Try to match frame height to content
+      const frame = document.getElementById('briefingFrame');
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (doc && doc.body) {
+        const h = doc.body.scrollHeight;
+        frame.style.minHeight = Math.max(h, 600) + 'px';
+      }
+    } catch(e) {
+      // Cross-origin, ignore
+    }
+  }
+
+  function onFrameError() {
+    document.querySelector('.status-bar span').innerHTML =
+      '<span class="dot" style="background:#f59e0b"></span> 简报加载中，请稍后刷新';
+  }
+</script>
+
+</body>
+</html>
