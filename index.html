@@ -142,6 +142,9 @@
 </div>
 
 <div class="masonry" id="masonry"></div>
+<div style="text-align:center;padding:10px 0 30px;">
+  <button id="loadMoreBtn" onclick="loadMore()" style="background:var(--card);color:var(--accent);border:1px solid var(--accent);border-radius:20px;padding:10px 28px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:none;">加载更多</button>
+</div>
 
 <div class="refresh-overlay" id="refreshOverlay">
   <div class="refresh-spinner"></div>
@@ -168,6 +171,9 @@ const DATA_URL = 'https://raw.githubusercontent.com/wongkd/news/main/data.json?v
 const TAG_MAP = { game:'游戏圈', hardware:'硬件圈', ai:'AI资讯' };
 let currentCat = 'all';
 let cards = [];
+let allItems = [];
+const PAGE_SIZE = 12;
+let loadedCount = 0;
 
 // Embedded fallback data
 const fallbackItems = [{"cat":"game","title":"索尼State of Play","summary":"Sony展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭Townfall新预告公开。","source":"17173","url":"https://news.17173.com/content/06032026/064803381.shtml","img":"https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format"},{"cat":"game","title":"6月新游发售表","summary":"NS2迎来《星际火狐》《FF7重生》等3A大作；Switch有《热血西游记》《一起开火车2》《潜水员戴夫：丛林》。端午三天不调休。","source":"腾讯新闻","url":"https://www.sohu.com/a/1029702669_122598898","img":"https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400&h=533&fit=crop&auto=format"},{"cat":"game","title":"5月游戏版号获批","summary":"154款国产+4款进口游戏获批。腾讯《追逐卡蕾多》、网易《诡影藏锋》、莉莉丝《小冰冰斗蛐蛐》等在列。","source":"新京报","url":"https://www.msn.cn/","img":"https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=533&fit=crop&auto=format"},{"cat":"game","title":"《Clutch》开放世界驾驶新作","summary":"前极限竞速创意总监迈克·布朗创立Maverick Games，公布首个作品《Clutch》，预计2027年春季发售。","source":"3DM游戏网","url":"https://www.3dmgame.com/news/game/","img":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=533&fit=crop&auto=format"},{"cat":"hardware","title":"英伟达正式入局PC CPU","summary":"COMPUTEX最大猛料：英伟达联手联发科推RTX Spark芯片，20核Grace CPU+Blackwell GPU+128GB统一内存，AI算力1 petaflop。","source":"搜狐科技","url":"https://www.sohu.com/a/1030951328_121761735","img":"https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400&h=533&fit=crop&auto=format"},{"cat":"hardware","title":"英特尔LGA 1954长周期插槽","summary":"英特尔公布三代CPU共用同一插槽规划。微星MSI 40周年全系新品齐发：Titan 18 HX典藏版笔记本、新一代掌机。","source":"ZOL","url":"https://pc.zol.com.cn/1192/11923520.html","img":"https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=533&fit=crop&auto=format"},{"cat":"hardware","title":"COMPUTEX 1500家展商聚焦AI","summary":"台北国际电脑展共1500家企业参展，6000个展位聚焦AI运算、机器人及次世代科技。","source":"综合报道","url":"https://www.msn.cn/","img":"https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=533&fit=crop&auto=format"},{"cat":"hardware","title":"先马双曲面玻璃机箱上新","summary":"国产机电品牌先马展出V80、V70机箱。双曲面钢化玻璃面板+环境灯效悬浮设计，支持60W PD-out USB-C。","source":"新浪科技","url":"https://finance.sina.com.cn/tech/digi/2026-05-29/doc-inhzqimi9423178.shtml","img":"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=533&fit=crop&auto=format"},{"cat":"ai","title":"腾讯混元发布Hy-Memory","summary":"基于6层记忆框架与双系统架构的记忆插件，记忆数量减70%+，信息密度提升45%，token消耗降35%。","source":"腾讯混元","url":"https://x.com/TencentHunyuan/status/2061372535267357029","img":"https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=533&fit=crop&auto=format"},{"cat":"ai","title":"Anthropic秘密提交IPO","summary":"向SEC秘密提交S-1草案，估值9650亿美元。刚完成650亿美元H轮融资，发布Claude Opus 4.8。","source":"Anthropic","url":"https://www.anthropic.com/news/confidential-draft-s1-sec","img":"https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=533&fit=crop&auto=format"},{"cat":"ai","title":"智谱冲刺科创板上市","summary":"拟发行2%-8%新股，募资投入AI通用基座大模型和MaaS平台，同时拟更名Z.AI Co., Ltd。","source":"IT之家","url":"https://www.ithome.com/0/958/444.htm","img":"https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=533&fit=crop&auto=format"},{"cat":"ai","title":"OpenAI Stargate 1GW数据中心","summary":"密歇根Stargate 1GW数据中心破土动工。上海十五五规划：多模态智能体、智能驾驶和具身智能产品。","source":"OpenAI / 上海发布","url":"https://openai.com/index/stargate-michigan-data-center","img":"https://images.unsplash.com/photo-1488229297570-58520851e868?w=400&h=533&fit=crop&auto=format"}];
@@ -180,10 +186,10 @@ function showToast(msg) {
 
 function renderCards(items) {
   const masonry = document.getElementById('masonry');
-  masonry.innerHTML = '';
   items.forEach((item, i) => {
+    const idx = loadedCount + i;
     const card = document.createElement('div');
-    card.className = 'card ' + item.cat + (i === 0 ? ' first' : '');
+    card.className = 'card ' + item.cat + (idx === 0 ? ' first' : '');
     card.dataset.cat = item.cat;
     card.dataset.title = item.title;
     card.dataset.summary = item.summary;
@@ -201,15 +207,39 @@ function renderCards(items) {
       </div>`;
     masonry.appendChild(card);
   });
+  loadedCount += items.length;
   cards = document.querySelectorAll('.card');
   bindCards();
-
-  // Filter to current tab
-  document.querySelectorAll('.tab-item').forEach(t => {
-    if (t.dataset.cat === currentCat) t.classList.add('active');
-    else t.classList.remove('active');
-  });
+  updateLoadMoreBtn();
   filterCards();
+}
+
+function loadMore() {
+  const filtered = currentCat === 'all' ? allItems : allItems.filter(i => i.cat === currentCat);
+  const next = filtered.slice(loadedCount, loadedCount + PAGE_SIZE);
+  if (next.length) renderCards(next);
+}
+
+function updateLoadMoreBtn() {
+  const btn = document.getElementById('loadMoreBtn');
+  const filtered = currentCat === 'all' ? allItems : allItems.filter(i => i.cat === currentCat);
+  if (loadedCount >= filtered.length) {
+    btn.textContent = '—— 已加载全部' + filtered.length + '条 ——';
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity = '0.5';
+  } else {
+    btn.textContent = '加载更多 (' + (filtered.length - loadedCount) + '条)';
+    btn.style.pointerEvents = 'all';
+    btn.style.opacity = '1';
+  }
+}
+
+function resetAndRender(items) {
+  document.getElementById('masonry').innerHTML = '';
+  loadedCount = 0;
+  document.getElementById('loadMoreBtn').style.display = 'block';
+  const first = items.slice(0, PAGE_SIZE);
+  renderCards(first);
 }
 
 function filterCards() {
@@ -240,15 +270,18 @@ async function loadData(silent) {
     const resp = await fetch(DATA_URL, { cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
-    renderCards(data.items);
+    allItems = data.items;
+    resetAndRender(allItems);
+    document.getElementById('loadMoreBtn').style.display = 'block';
     if (!silent) showToast('✅ 资讯已刷新 (' + data.items.length + '条)');
   } catch(e) {
-    // Fallback to embedded data if fetch fails
     if (fallbackItems.length) {
-      renderCards(fallbackItems);
-      if (!silent) showToast('📡 离线模式，显示备用数据');
+      allItems = fallbackItems;
+      resetAndRender(allItems);
+      document.getElementById('loadMoreBtn').style.display = 'block';
+      if (!silent) showToast('📡 离线模式');
     } else {
-      showToast('⚠️ 刷新失败，请稍后重试');
+      showToast('⚠️ 刷新失败');
     }
   }
 }
@@ -274,7 +307,11 @@ document.querySelectorAll('.tab-item').forEach(tab => {
     document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
     this.classList.add('active');
     currentCat = this.dataset.cat;
-    filterCards();
+    const filtered = currentCat === 'all' ? allItems : allItems.filter(i => i.cat === currentCat);
+    document.getElementById('masonry').innerHTML = '';
+    loadedCount = 0;
+    const first = filtered.slice(0, PAGE_SIZE);
+    renderCards(first);
   });
 });
 
