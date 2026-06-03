@@ -113,17 +113,17 @@
   .card .img-wrap {
     position: relative; width: 100%;
     aspect-ratio: 3/4; overflow: hidden;
-    background: #f0f0f0;
   }
   .card.first .img-wrap { aspect-ratio: 2/3; }
-  @media (prefers-color-scheme: dark) { .card .img-wrap { background: #1a1a1a; } }
 
   .card .img-wrap img {
     width: 100%; height: 100%;
     object-fit: cover; display: block;
   }
-  /* Hide wrapper if img broken */
+  /* Hide wrapper immediately if img failed; show only text card */
   .card .img-wrap.broken { display: none; }
+  /* Ensure card body pushes up when img-wrap is hidden */
+  .card:has(.img-wrap.broken) .body { padding-top: 12px; }
 
   .card .body { padding: 8px 12px 12px; position: relative; z-index: 2; }
 
@@ -322,7 +322,12 @@
     });
   });
 
-  <!-- ── Card click → modal ── -->
+  // ── Broken image fallback (check after load) ──
+  document.querySelectorAll('.card .img-wrap img').forEach(img => {
+    if (img.complete && img.naturalWidth === 0) {
+      img.parentElement.classList.add('broken');
+    }
+  });
   const modal = document.getElementById('modal');
   const modalBack = document.getElementById('modalBack');
   cards.forEach(card => {
