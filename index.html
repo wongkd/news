@@ -114,19 +114,37 @@
   }
   .card .img-wrap .bg-gradient {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(160deg, #f0e6ff, #e8e0f0, #f5f0fa);
   }
-  .card.game .img-wrap .bg-gradient { background: linear-gradient(135deg, #e5536e, #d63384); }
-  .card.hardware .img-wrap .bg-gradient { background: linear-gradient(135deg, #0088a9, #00b4d8); }
-  .card.ai .img-wrap .bg-gradient { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+  .card.game .img-wrap .bg-gradient { background: linear-gradient(160deg, #fff0f3, #fce4ec, #fff5f5); }
+  .card.hardware .img-wrap .bg-gradient { background: linear-gradient(160deg, #e0f7fa, #ecf9fc, #f0fcff); }
+  .card.ai .img-wrap .bg-gradient { background: linear-gradient(160deg, #f3e8ff, #ede4f5, #f5f0fa); }
+  @media (prefers-color-scheme: dark) {
+    .card .img-wrap .bg-gradient { background: linear-gradient(160deg, #1e1b35, #1a1628, #1c1a2e); }
+    .card.game .img-wrap .bg-gradient { background: linear-gradient(160deg, #2d1520, #22121a, #1f1418); }
+    .card.hardware .img-wrap .bg-gradient { background: linear-gradient(160deg, #0d2d33, #0a2428, #0f282c); }
+    .card.ai .img-wrap .bg-gradient { background: linear-gradient(160deg, #1a1630, #161228, #1c1a30); }
+  }
 
   .card .img-wrap img {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 1;
   }
-  /* If image fails to load, gradient shows through */
   .card .img-wrap img[src=""],
   .card .img-wrap img:not([src]) { display: none; }
+
+  /* Subtle emoji watermark on gradient fallback */
+  .card .img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px; opacity: 0.5; z-index: 0;
+    pointer-events: none;
+  }
+  .card.game .img-wrap::after { content: '🎮'; }
+  .card.hardware .img-wrap::after { content: '💻'; }
+  .card.ai .img-wrap::after { content: '🤖'; }
+  .card .img-wrap:has(img[src]):has(img:not([src=""])) .bg-gradient,
+  .card .img-wrap:has(img[src]:not([src=""]))::after { display: none; }
 
   .card .body { padding: 8px 12px 12px; position: relative; z-index: 2; }
 
