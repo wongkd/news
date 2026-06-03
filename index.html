@@ -55,11 +55,12 @@
   }
   .card:active { transform:translateY(2px) scale(0.985); box-shadow:0 1px 6px rgba(0,0,0,0.06); }
   .card.hidden { display:none; }
-  .card .img-wrap { position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; }
+  .card .img-wrap { position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; background:#eee; }
+  @media (prefers-color-scheme: dark) { .card .img-wrap { background:#222; } }
   .card.first .img-wrap { aspect-ratio:2/3; }
-  .card .img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
-  .card .img-wrap.broken { display:none; }
-  .card:has(.img-wrap.broken) .body { padding-top:12px; }
+  .card .img-wrap .img-bg { width:100%; height:100%; background-size:cover; background-position:center; background-color:#eee; }
+  @media (prefers-color-scheme: dark) { .card .img-wrap .img-bg { background-color:#222; } }
+  .card .img-wrap img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; top:0; left:0; }
 
   .card .body { padding:8px 12px 12px; }
   .card .meta-tag { font-size:10px; font-weight:500; letter-spacing:0.3px; margin-bottom:3px; }
@@ -167,7 +168,9 @@ function renderCards(items) {
     card.dataset.url = item.url;
     card.dataset.tag = TAG_MAP[item.cat];
     card.innerHTML = `
-      <div class="img-wrap"><img src="${item.img}" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
+      <div class="img-wrap">
+        <div class="img-bg" style="background-image:url(${item.img})"></div>
+      </div>
       <div class="body">
         <div class="meta-tag">${TAG_MAP[item.cat]}</div>
         <h2>${item.title}</h2>
@@ -195,8 +198,9 @@ function filterCards() {
 function bindCards() {
   cards.forEach(card => {
     card.addEventListener('click', function() {
-      const imgEl = this.querySelector('.img-wrap img');
-      document.getElementById('modalCover').src = imgEl ? imgEl.src : '';
+      const bgDiv = this.querySelector('.img-bg');
+      const bgImg = bgDiv ? bgDiv.style.backgroundImage.replace(/url\(["']?|["']?\)/g,'') : '';
+      document.getElementById('modalCover').src = bgImg;
       document.getElementById('modalTag').textContent = this.dataset.tag;
       document.getElementById('modalSource').textContent = this.dataset.source;
       document.getElementById('modalTitle').textContent = this.dataset.title;
