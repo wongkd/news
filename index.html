@@ -52,7 +52,7 @@
   .top-bar .phone-icon {
     font-size: 30px; cursor: pointer; user-select: none;
     transition: transform 0.3s ease; line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 4px; position: relative;
   }
   .phone-icon.pickup { animation: phonePickup 0.8s ease; }
   @keyframes phonePickup {
@@ -62,6 +62,29 @@
     60%  { transform: translateY(-10px) rotate(-3deg); }
     80%  { transform: translateY(-4px) rotate(2deg); }
     100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  /* Refresh loading overlay */
+  .refresh-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(245,245,245,0.6);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    flex-direction: column; gap: 12px;
+  }
+  .refresh-overlay.active { opacity: 1; pointer-events: all; }
+  .refresh-spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #e0e0e0;
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .refresh-text { font-size: 14px; color: var(--text); font-weight: 500; }
+  @media (prefers-color-scheme: dark) {
+    .refresh-overlay { background: rgba(17,17,17,0.6); }
   }
   .top-bar .brand-name {
     font-size: 16px; font-weight: 600; letter-spacing: 0.6px;
@@ -290,18 +313,26 @@
   </div>
 </div>
 
+<div class="refresh-overlay" id="refreshOverlay">
+  <div class="refresh-spinner"></div>
+  <div class="refresh-text">正在刷新资讯...</div>
+</div>
+
 <script>
   // ── Phone refresh ──
   const phoneIcon = document.getElementById('phoneIcon');
+  const refreshOverlay = document.getElementById('refreshOverlay');
   phoneIcon.addEventListener('click', function(e) {
     e.stopPropagation();
     this.classList.remove('pickup');
     void this.offsetWidth;
     this.classList.add('pickup');
+    // Show loading overlay after pickup animation
     setTimeout(() => {
-      this.classList.remove('pickup');
-      location.reload();
-    }, 1000);
+      refreshOverlay.classList.add('active');
+      // Reload page after brief loading
+      setTimeout(() => { location.reload(true); }, 800);
+    }, 600);
   });
 
   // ── Tab switching ──
