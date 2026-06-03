@@ -6,224 +6,113 @@
 <title>宋嘉儀24小时专属助理</title>
 <style>
   :root {
-    --bg: #f5f5f5;
-    --card: #ffffff;
-    --text: #111111;
-    --sub: #999999;
-    --accent: #ff2442;
-    --tab-active: #111111;
-    --tab-inactive: #999999;
+    --bg: #f5f5f5; --card: #ffffff; --text: #111111; --sub: #999999;
+    --accent: #ff2442; --tab-active: #111111; --tab-inactive: #999999;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #111111;
-      --card: #1c1c1c;
-      --text: #e8e8e8;
-      --sub: #777777;
-      --tab-active: #e8e8e8;
-      --tab-inactive: #666666;
-    }
+    :root { --bg: #111111; --card: #1c1c1c; --text: #e8e8e8; --sub: #777777; --tab-active: #e8e8e8; --tab-inactive: #666666; }
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+    font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Helvetica Neue',sans-serif;
     background: var(--bg); color: var(--text); min-height: 100vh;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;
     letter-spacing: 0.2px;
   }
-
-  /* ── Top Bar ── */
   .top-bar {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(245,245,245,0.85);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    background: rgba(245,245,245,0.85); backdrop-filter: blur(20px);
     padding: 12px 16px 8px;
   }
-  @media (prefers-color-scheme: dark) {
-    .top-bar { background: rgba(17,17,17,0.85); }
-  }
-
-  .top-bar .brand-row {
-    display: flex; flex-direction: column; align-items: center;
-    margin-bottom: 12px;
-  }
-  .top-bar .phone-icon {
-    font-size: 30px; cursor: pointer; user-select: none;
-    transition: transform 0.3s ease; line-height: 1;
-    margin-bottom: 4px; position: relative;
-  }
+  @media (prefers-color-scheme: dark) { .top-bar { background: rgba(17,17,17,0.85); } }
+  .top-bar .brand-row { display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
+  .top-bar .phone-icon { font-size: 30px; cursor: pointer; user-select: none; line-height: 1; margin-bottom: 4px; }
   .phone-icon.pickup { animation: phonePickup 0.8s ease; }
   @keyframes phonePickup {
-    0%   { transform: translateY(0) rotate(0deg); }
-    20%  { transform: translateY(-8px) rotate(-6deg); }
-    40%  { transform: translateY(-6px) rotate(5deg); }
-    60%  { transform: translateY(-10px) rotate(-3deg); }
-    80%  { transform: translateY(-4px) rotate(2deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+    0% { transform: translateY(0) rotate(0deg); } 20% { transform: translateY(-8px) rotate(-6deg); }
+    40% { transform: translateY(-6px) rotate(5deg); } 60% { transform: translateY(-10px) rotate(-3deg); }
+    80% { transform: translateY(-4px) rotate(2deg); } 100% { transform: translateY(0) rotate(0deg); }
   }
+  .top-bar .brand-name { font-size: 16px; font-weight: 600; letter-spacing: 0.6px; }
 
-  /* Refresh loading overlay */
-  .refresh-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(245,245,245,0.6);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-    flex-direction: column; gap: 12px;
-  }
-  .refresh-overlay.active { opacity: 1; pointer-events: all; }
-  .refresh-spinner {
-    width: 36px; height: 36px;
-    border: 3px solid #e0e0e0;
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .refresh-text { font-size: 14px; color: var(--text); font-weight: 500; }
-  @media (prefers-color-scheme: dark) {
-    .refresh-overlay { background: rgba(17,17,17,0.6); }
-  }
-  .top-bar .brand-name {
-    font-size: 16px; font-weight: 600; letter-spacing: 0.6px;
-  }
-
-  /* ── Tab bar ── */
-  .tab-bar {
-    display: flex; gap: 0; overflow-x: auto;
-    scrollbar-width: none; -ms-overflow-style: none;
-    padding: 0;
-  }
+  .tab-bar { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
   .tab-bar::-webkit-scrollbar { display: none; }
   .tab-item {
-    flex-shrink: 0; padding: 6px 16px;
-    font-size: 14px; color: var(--tab-inactive); font-weight: 400;
-    cursor: pointer; position: relative; transition: color 0.2s;
-    white-space: nowrap; border: none; background: none; font-family: inherit;
+    flex-shrink: 0; padding: 6px 16px; font-size: 14px; color: var(--tab-inactive); font-weight: 400;
+    cursor: pointer; position: relative; transition: color 0.2s; white-space: nowrap;
+    border: none; background: none; font-family: inherit;
   }
   .tab-item.active { color: var(--tab-active); font-weight: 600; }
-  .tab-item.active::after {
-    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 18px; height: 2.5px; border-radius: 2px; background: var(--tab-active);
-  }
+  .tab-item.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:18px; height:2.5px; border-radius:2px; background:var(--tab-active); }
 
-  /* ── Masonry ── */
-  .masonry {
-    max-width: 620px; margin: 0 auto;
-    padding: 4px 12px 60px;
-    column-count: 2; column-gap: 10px;
-  }
+  .masonry { max-width:620px; margin:0 auto; padding:4px 12px 60px; column-count:2; column-gap:10px; }
 
-  /* ── Card ── */
   .card {
-    break-inside: avoid; margin-bottom: 10px;
-    background: var(--card); border-radius: 20px; overflow: hidden;
-    cursor: pointer; position: relative;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-    transition: transform 0.15s cubic-bezier(0.22, 0.61, 0.36, 1),
-                box-shadow 0.15s ease;
-    display: block;
+    break-inside: avoid; margin-bottom:10px; background:var(--card);
+    border-radius:20px; overflow:hidden; cursor:pointer;
+    box-shadow:0 2px 16px rgba(0,0,0,0.04);
+    transition: transform 0.15s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.15s ease;
   }
-  .card:active {
-    transform: translateY(2px) scale(0.985);
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-  }
-  .card.hidden { display: none; }
+  .card:active { transform:translateY(2px) scale(0.985); box-shadow:0 1px 6px rgba(0,0,0,0.06); }
+  .card.hidden { display:none; }
+  .card .img-wrap { position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; }
+  .card.first .img-wrap { aspect-ratio:2/3; }
+  .card .img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+  .card .img-wrap.broken { display:none; }
+  .card:has(.img-wrap.broken) .body { padding-top:12px; }
 
-  /* Image container */
-  .card .img-wrap {
-    position: relative; width: 100%;
-    aspect-ratio: 3/4; overflow: hidden;
-  }
-  .card.first .img-wrap { aspect-ratio: 2/3; }
+  .card .body { padding:8px 12px 12px; }
+  .card .meta-tag { font-size:10px; font-weight:500; letter-spacing:0.3px; margin-bottom:3px; }
+  .card.game .meta-tag { color:#e5536e; }
+  .card.hardware .meta-tag { color:#0090ad; }
+  .card.ai .meta-tag { color:#6c5ce7; }
+  .card h2 { font-size:13px; font-weight:400; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .card .source { font-size:10px; color:var(--sub); margin-top:5px; }
 
-  .card .img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
+  .refresh-overlay {
+    position:fixed; inset:0; z-index:200; background:rgba(245,245,245,0.6);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;
+    opacity:0; pointer-events:none; transition:opacity 0.3s;
   }
-  /* Hide wrapper immediately if img failed; show only text card */
-  .card .img-wrap.broken { display: none; }
-  /* Ensure card body pushes up when img-wrap is hidden */
-  .card:has(.img-wrap.broken) .body { padding-top: 12px; }
+  .refresh-overlay.active { opacity:1; pointer-events:all; }
+  @media (prefers-color-scheme: dark) { .refresh-overlay { background:rgba(17,17,17,0.6); } }
+  .refresh-spinner { width:36px; height:36px; border:3px solid #e0e0e0; border-top-color:var(--accent); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .refresh-text { font-size:14px; color:var(--text); font-weight:500; }
 
-  .card .body { padding: 8px 12px 12px; position: relative; z-index: 2; }
+  .modal-overlay { position:fixed; inset:0; z-index:999; background:var(--bg); overflow-y:auto; display:none; opacity:0; transition:opacity 0.2s; }
+  .modal-overlay.open { display:block; opacity:1; }
+  .modal-back { position:sticky; top:0; z-index:10; background:var(--bg); padding:14px 16px; font-size:14px; font-weight:500; cursor:pointer; }
+  .modal-content { max-width:640px; margin:0 auto; padding:0 0 50px; }
+  .modal-content .cover-full { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; }
+  .modal-content .detail-body { padding:20px 18px 30px; }
+  .modal-content .detail-meta { font-size:12px; color:var(--sub); margin-bottom:14px; }
+  .modal-content .detail-title { font-size:20px; font-weight:600; line-height:1.45; margin-bottom:16px; }
+  .modal-content .detail-summary { font-size:14px; color:var(--sub); line-height:1.85; margin-bottom:28px; }
+  .modal-content .detail-link { display:inline-block; font-size:12px; color:var(--accent); text-decoration:none; font-weight:500; padding:8px 18px; border:1px solid var(--accent); border-radius:20px; }
 
-  .card .meta-tag {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
-    margin-bottom: 3px;
-  }
-  .card.game .meta-tag { color: #e5536e; }
-  .card.hardware .meta-tag { color: #0090ad; }
-  .card.ai .meta-tag { color: #6c5ce7; }
+  .toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:300; background:var(--text); color:var(--bg); font-size:13px; padding:10px 20px; border-radius:20px; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+  .toast.show { opacity:1; }
 
-  .card h2 {
-    font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--text);
-    display: -webkit-box; -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .card .source {
-    font-size: 10px; color: var(--sub); margin-top: 5px;
-  }
-
-  /* ── Detail Modal ── */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 999;
-    background: var(--bg);
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-    display: none; opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  .modal-overlay.open { display: block; opacity: 1; }
-
-  .modal-back {
-    position: sticky; top: 0; z-index: 10;
-    background: var(--bg);
-    padding: 14px 16px; font-size: 14px; font-weight: 500;
-    cursor: pointer; display: flex; align-items: center; gap: 6px;
-  }
-  .modal-content { max-width: 640px; margin: 0 auto; padding: 0 0 50px; }
-  .modal-content .cover-full {
-    width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover;
-  }
-  .modal-content .detail-body { padding: 20px 18px 30px; }
-  .modal-content .detail-meta {
-    font-size: 12px; color: var(--sub); margin-bottom: 14px;
-  }
-  .modal-content .detail-title {
-    font-size: 20px; font-weight: 600; line-height: 1.45; margin-bottom: 16px;
-  }
-  .modal-content .detail-summary {
-    font-size: 14px; color: var(--sub); line-height: 1.85; margin-bottom: 28px;
-  }
-  .modal-content .detail-link {
-    display: inline-block; font-size: 12px; color: var(--accent);
-    text-decoration: none; font-weight: 500;
-    padding: 8px 18px; border: 1px solid var(--accent);
-    border-radius: 20px; cursor: pointer;
-  }
-
-  @media (max-width: 480px) {
-    .masonry { padding: 4px 8px 50px; column-gap: 8px; }
-    .card { border-radius: 16px; margin-bottom: 8px; }
-    .card .body { padding: 6px 10px 10px; }
-    .card h2 { font-size: 11px; }
-    .top-bar { padding: 10px 12px 6px; }
-    .tab-item { padding: 5px 12px; font-size: 13px; }
-    .modal-content .detail-title { font-size: 18px; }
+  @media (max-width:480px) {
+    .masonry { padding:4px 8px 50px; column-gap:8px; }
+    .card { border-radius:16px; margin-bottom:8px; }
+    .card .body { padding:6px 10px 10px; }
+    .card h2 { font-size:11px; }
+    .top-bar { padding:10px 12px 6px; }
+    .tab-item { padding:5px 12px; font-size:13px; }
+    .modal-content .detail-title { font-size:18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── Top Bar ── -->
 <div class="top-bar">
   <div class="brand-row">
     <span class="phone-icon" id="phoneIcon">☎️</span>
     <span class="brand-name">宋嘉儀 · 24小时专属助理</span>
   </div>
-  <div class="tab-bar" id="tabBar">
+  <div class="tab-bar">
     <button class="tab-item active" data-cat="all">全部</button>
     <button class="tab-item" data-cat="game">游戏圈</button>
     <button class="tab-item" data-cat="hardware">硬件圈</button>
@@ -231,79 +120,19 @@
   </div>
 </div>
 
-<!-- ── Cards ── -->
-<div class="masonry" id="masonry">
+<div class="masonry" id="masonry"></div>
 
-  <!-- ====== 游戏圈 ====== -->
-  <div class="card game first" data-cat="game" data-url="https://news.17173.com/content/06032026/064803381.shtml" data-title="索尼 State of Play 汇总" data-summary="Sony 在 State of Play 上展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭 Townfall 新预告公开，堪称近年来最炸裂的一次发布会。" data-source="17173" data-tag="游戏圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">游戏圈</div><h2>索尼State of Play</h2><div class="source">17173</div></div>
-  </div>
-
-  <div class="card game" data-cat="game" data-url="https://www.sohu.com/a/1029702669_122598898" data-title="2026年6月新游发售表" data-summary="6月游戏阵容加强：NS2 迎来《星际火狐》和《FF7重生》等3A大作；Switch有《热血西游记》《一起开火车2》《潜水员戴夫：丛林》。端午三天不调休，宅家好时机。" data-source="腾讯新闻" data-tag="游戏圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">游戏圈</div><h2>6月新游发售表</h2><div class="source">腾讯新闻</div></div>
-  </div>
-
-  <div class="card game" data-cat="game" data-url="https://www.msn.cn/" data-title="5月游戏版号获批" data-summary="国家新闻出版署公布5月版号：154款国产+4款进口获批。腾讯《追逐卡蕾多》、网易《诡影藏锋》、莉莉丝《小冰冰斗蛐蛐》等在列，创今年单月新高。" data-source="新京报" data-tag="游戏圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">游戏圈</div><h2>5月游戏版号获批</h2><div class="source">新京报</div></div>
-  </div>
-
-  <div class="card game" data-cat="game" data-url="https://www.3dmgame.com/news/game/" data-title="《Clutch》开放世界驾驶新作" data-summary="由前《极限竞速：地平线》创意总监迈克·布朗创立的独立工作室 Maverick Games 公布了首个作品——开放世界动作驾驶游戏《Clutch》，预计 2027 年春季发售。" data-source="3DM游戏网" data-tag="游戏圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">游戏圈</div><h2>《Clutch》开放世界驾驶新作</h2><div class="source">3DM游戏网</div></div>
-  </div>
-
-  <!-- ====== 硬件圈 ====== -->
-  <div class="card hardware" data-cat="hardware" data-url="https://www.sohu.com/a/1030951328_121761735" data-title="英伟达正式入局PC CPU" data-summary="COMPUTEX最大消息：英伟达联手联发科推出基于Arm的RTX Spark芯片，20核Grace CPU+Blackwell RTX GPU+128GB统一内存，AI算力达1 petaflop。美股半导体板块直接跳水，PC行业十年最大变局。" data-source="搜狐科技" data-tag="硬件圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">硬件圈</div><h2>英伟达正式入局PC CPU</h2><div class="source">搜狐科技</div></div>
-  </div>
-
-  <div class="card hardware" data-cat="hardware" data-url="https://pc.zol.com.cn/1192/11923520.html" data-title="英特尔LGA 1954长周期插槽" data-summary="英特尔公布LGA 1954插槽规划，拟实现三代CPU共用同一插槽，大幅降低升级成本。微星MSI同时展出40周年全系新品——Titan 18 HX典藏版笔记本、新一代掌机等。" data-source="ZOL / 快科技" data-tag="硬件圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">硬件圈</div><h2>英特尔LGA 1954长周期插槽</h2><div class="source">ZOL / 快科技</div></div>
-  </div>
-
-  <div class="card hardware" data-cat="hardware" data-url="https://www.msn.cn/" data-title="COMPUTEX 1500家展商聚焦AI" data-summary="为期四天的台北国际电脑展共吸引1500家企业、6000个展位，聚焦AI运算、机器人及次世代科技。从NVIDIA到华硕、技嘉、微星，AI PC成为全展最大公约数。" data-source="综合报道" data-tag="硬件圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">硬件圈</div><h2>COMPUTEX 1500家展商聚焦AI</h2><div class="source">综合报道</div></div>
-  </div>
-
-  <div class="card hardware" data-cat="hardware" data-url="https://finance.sina.com.cn/tech/digi/2026-05-29/doc-inhzqimi9423178.shtml" data-title="先马双曲面玻璃机箱上新" data-summary="国产机电品牌先马在COMPUTEX展出V80、V70两款重磅机箱。V80前脸双曲面钢化玻璃面板+环境灯效悬浮设计，支持60W PD-out USB-C接口，电源和散热产品线同步更新。" data-source="新浪科技" data-tag="硬件圈">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">硬件圈</div><h2>先马双曲面玻璃机箱上新</h2><div class="source">新浪科技</div></div>
-  </div>
-
-  <!-- ====== AI资讯 ====== -->
-  <div class="card ai" data-cat="ai" data-url="https://x.com/TencentHunyuan/status/2061372535267357029" data-title="腾讯混元发布Hy-Memory" data-summary="腾讯混元推出专为长期协作智能体设计的记忆插件Hy-Memory，基于6层记忆框架与双系统架构。记忆数量减少70%以上，单条信息密度提升45%，超长上下文token消耗降低35%。" data-source="腾讯混元" data-tag="AI资讯">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">AI资讯</div><h2>腾讯混元发布Hy-Memory</h2><div class="source">腾讯混元</div></div>
-  </div>
-
-  <div class="card ai" data-cat="ai" data-url="https://www.anthropic.com/news/confidential-draft-s1-sec" data-title="Anthropic秘密提交IPO" data-summary="Anthropic向SEC秘密提交S-1草案，估值高达9650亿美元。公司刚完成650亿美元H轮融资，并发布Claude Opus 4.8模型。IPO股数和价格尚未确定，将取决于市场条件。" data-source="Anthropic" data-tag="AI资讯">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">AI资讯</div><h2>Anthropic秘密提交IPO</h2><div class="source">Anthropic</div></div>
-  </div>
-
-  <div class="card ai" data-cat="ai" data-url="https://www.ithome.com/0/958/444.htm" data-title="智谱冲刺科创板上市" data-summary="智谱正式向中国监管机构申请A股科创板上市，拟发行2%-8%新股，募集资金用于AI通用基座大模型和大模型MaaS一站式服务平台。公司同时拟更名Z.AI Co., Ltd." data-source="IT之家" data-tag="AI资讯">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">AI资讯</div><h2>智谱冲刺科创板上市</h2><div class="source">IT之家</div></div>
-  </div>
-
-  <div class="card ai" data-cat="ai" data-url="https://openai.com/index/stargate-michigan-data-center" data-title="OpenAI Stargate 1GW数据中心" data-summary="OpenAI启动密歇根Stargate 1GW数据中心建设，扩大AI算力可及性。同时上海发布十五五服务业规划：重点支持多模态智能体、智能驾驶和具身智能产品开发。" data-source="OpenAI / 上海发布" data-tag="AI资讯">
-    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1488229297570-58520851e868?w=400&h=533&fit=crop&auto=format" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
-    <div class="body"><div class="meta-tag">AI资讯</div><h2>OpenAI Stargate 1GW数据中心</h2><div class="source">OpenAI / 上海发布</div></div>
-  </div>
-
+<div class="refresh-overlay" id="refreshOverlay">
+  <div class="refresh-spinner"></div>
+  <div class="refresh-text">正在刷新资讯...</div>
 </div>
 
-<!-- ── Detail Modal ── -->
+<div class="toast" id="toast"></div>
+
 <div class="modal-overlay" id="modal">
   <div class="modal-back" id="modalBack">← 返回</div>
   <div class="modal-content">
-    <img class="cover-full" id="modalCover" src="" alt="">
+    <img class="cover-full" id="modalCover" src="">
     <div class="detail-body">
       <div class="detail-meta"><span id="modalTag"></span> · <span id="modalSource"></span></div>
       <div class="detail-title" id="modalTitle"></div>
@@ -313,75 +142,114 @@
   </div>
 </div>
 
-<div class="refresh-overlay" id="refreshOverlay">
-  <div class="refresh-spinner"></div>
-  <div class="refresh-text">正在刷新资讯...</div>
-</div>
-
 <script>
-  // ── Phone refresh ──
-  const phoneIcon = document.getElementById('phoneIcon');
-  const refreshOverlay = document.getElementById('refreshOverlay');
-  phoneIcon.addEventListener('click', function(e) {
-    e.stopPropagation();
-    this.classList.remove('pickup');
-    void this.offsetWidth;
-    this.classList.add('pickup');
-    // Show loading overlay after pickup animation
-    setTimeout(() => {
-      refreshOverlay.classList.add('active');
-      // Reload page after brief loading
-      setTimeout(() => { location.reload(true); }, 800);
-    }, 600);
-  });
+const DATA_URL = 'https://raw.githubusercontent.com/wongkd/news/main/data.json?v=' + Date.now();
+const TAG_MAP = { game:'游戏圈', hardware:'硬件圈', ai:'AI资讯' };
+let currentCat = 'all';
+let cards = [];
 
-  // ── Tab switching ──
-  const tabs = document.querySelectorAll('.tab-item');
-  const cards = document.querySelectorAll('.card');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      tabs.forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-      const cat = this.dataset.cat;
-      cards.forEach(card => {
-        if (cat === 'all' || card.dataset.cat === cat) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    });
-  });
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
 
-  // ── Broken image fallback (check after load) ──
-  document.querySelectorAll('.card .img-wrap img').forEach(img => {
-    if (img.complete && img.naturalWidth === 0) {
-      img.parentElement.classList.add('broken');
-    }
+function renderCards(items) {
+  const masonry = document.getElementById('masonry');
+  masonry.innerHTML = '';
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card ' + item.cat + (i === 0 ? ' first' : '');
+    card.dataset.cat = item.cat;
+    card.dataset.title = item.title;
+    card.dataset.summary = item.summary;
+    card.dataset.source = item.source;
+    card.dataset.url = item.url;
+    card.dataset.tag = TAG_MAP[item.cat];
+    card.innerHTML = `
+      <div class="img-wrap"><img src="${item.img}" alt="" loading="lazy" onerror="this.parentElement.classList.add('broken')"></div>
+      <div class="body">
+        <div class="meta-tag">${TAG_MAP[item.cat]}</div>
+        <h2>${item.title}</h2>
+        <div class="source">${item.source}</div>
+      </div>`;
+    masonry.appendChild(card);
   });
-  const modal = document.getElementById('modal');
-  const modalBack = document.getElementById('modalBack');
+  cards = document.querySelectorAll('.card');
+  bindCards();
+
+  // Filter to current tab
+  document.querySelectorAll('.tab-item').forEach(t => {
+    if (t.dataset.cat === currentCat) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+  filterCards();
+}
+
+function filterCards() {
+  cards.forEach(c => {
+    c.classList.toggle('hidden', currentCat !== 'all' && c.dataset.cat !== currentCat);
+  });
+}
+
+function bindCards() {
   cards.forEach(card => {
     card.addEventListener('click', function() {
       const imgEl = this.querySelector('.img-wrap img');
-      const imgSrc = imgEl ? imgEl.src : '';
-      const modalCover = document.getElementById('modalCover');
-      modalCover.src = imgSrc;
-      document.getElementById('modalTag').textContent = this.dataset.tag || '';
-      document.getElementById('modalSource').textContent = this.dataset.source || '';
+      document.getElementById('modalCover').src = imgEl ? imgEl.src : '';
+      document.getElementById('modalTag').textContent = this.dataset.tag;
+      document.getElementById('modalSource').textContent = this.dataset.source;
       document.getElementById('modalTitle').textContent = this.dataset.title;
       document.getElementById('modalSummary').textContent = this.dataset.summary;
       document.getElementById('modalLink').href = this.dataset.url;
-      modal.classList.add('open');
-      modal.scrollTop = 0;
+      document.getElementById('modal').classList.add('open');
       document.body.style.overflow = 'hidden';
     });
   });
+}
 
-  modalBack.addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
-  modal.addEventListener('click', e => { if (e.target === modal) { modal.classList.remove('open'); document.body.style.overflow = ''; } });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) { modal.classList.remove('open'); document.body.style.overflow = ''; } });
+async function loadData(silent) {
+  try {
+    const resp = await fetch(DATA_URL, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    renderCards(data.items);
+    if (!silent) showToast('✅ 资讯已刷新 (' + data.items.length + '条)');
+  } catch(e) {
+    showToast('⚠️ 刷新失败，请稍后重试');
+  }
+}
+
+// ── Init ──
+loadData(true);
+
+// ── Phone refresh ──
+document.getElementById('phoneIcon').addEventListener('click', function(e) {
+  e.stopPropagation();
+  const icon = this, overlay = document.getElementById('refreshOverlay');
+  icon.classList.remove('pickup'); void icon.offsetWidth; icon.classList.add('pickup');
+  setTimeout(() => overlay.classList.add('active'), 400);
+  setTimeout(async () => {
+    await loadData(false);
+    overlay.classList.remove('active');
+  }, 1200);
+});
+
+// ── Tab switching ──
+document.querySelectorAll('.tab-item').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    currentCat = this.dataset.cat;
+    filterCards();
+  });
+});
+
+// ── Modal ──
+const modal = document.getElementById('modal');
+document.getElementById('modalBack').addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
+modal.addEventListener('click', e => { if(e.target===modal){modal.classList.remove('open');document.body.style.overflow='';} });
+document.addEventListener('keydown', e => { if(e.key==='Escape'&&modal.classList.contains('open')){modal.classList.remove('open');document.body.style.overflow='';} });
 </script>
-
 </body>
 </html>
