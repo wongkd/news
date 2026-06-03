@@ -81,16 +81,36 @@
   @keyframes spin { to { transform:rotate(360deg); } }
   .refresh-text { font-size:14px; color:var(--text); font-weight:500; }
 
-  .modal-overlay { position:fixed; inset:0; z-index:999; background:var(--bg); overflow-y:auto; display:none; opacity:0; transition:opacity 0.2s; }
-  .modal-overlay.open { display:block; opacity:1; }
-  .modal-back { position:sticky; top:0; z-index:10; background:var(--bg); padding:14px 16px; font-size:14px; font-weight:500; cursor:pointer; }
-  .modal-content { max-width:640px; margin:0 auto; padding:0 0 50px; }
-  .modal-content .cover-full { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; }
-  .modal-content .detail-body { padding:20px 18px 30px; }
-  .modal-content .detail-meta { font-size:12px; color:var(--sub); margin-bottom:14px; }
-  .modal-content .detail-title { font-size:20px; font-weight:600; line-height:1.45; margin-bottom:16px; }
-  .modal-content .detail-summary { font-size:14px; color:var(--sub); line-height:1.85; margin-bottom:28px; }
-  .modal-content .detail-link { display:inline-block; font-size:12px; color:var(--accent); text-decoration:none; font-weight:500; padding:8px 18px; border:1px solid var(--accent); border-radius:20px; }
+  .modal-overlay {
+    position:fixed; inset:0; z-index:999;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.25s ease;
+    padding:24px 16px;
+  }
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+
+  .modal-card {
+    background:var(--card); border-radius:18px; overflow:hidden;
+    width:100%; max-width:440px; max-height:90vh;
+    box-shadow:0 20px 60px rgba(0,0,0,0.15);
+    transform:translateY(30px) scale(0.95);
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
+  .modal-overlay.open .modal-card {
+    transform:translateY(0) scale(1);
+  }
+
+  .modal-card .cover-full { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; }
+  .modal-card .detail-body { padding:18px 18px 24px; }
+  .modal-card .detail-meta { font-size:12px; color:var(--sub); margin-bottom:12px; }
+  .modal-card .detail-title { font-size:18px; font-weight:600; line-height:1.45; margin-bottom:12px; }
+  .modal-card .detail-summary { font-size:14px; color:var(--sub); line-height:1.8; margin-bottom:20px; }
+  .modal-card .detail-link { display:inline-block; font-size:12px; color:var(--accent); text-decoration:none; font-weight:500; padding:8px 18px; border:1px solid var(--accent); border-radius:20px; margin-top:4px; }
+  .modal-card .close-hint { text-align:center; padding:10px; font-size:11px; color:var(--sub); border-top:0.5px solid rgba(128,128,128,0.1); cursor:pointer; }
 
   .toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:300; background:var(--text); color:var(--bg); font-size:13px; padding:10px 20px; border-radius:20px; opacity:0; transition:opacity 0.3s; pointer-events:none; }
   .toast.show { opacity:1; }
@@ -131,8 +151,7 @@
 <div class="toast" id="toast"></div>
 
 <div class="modal-overlay" id="modal">
-  <div class="modal-back" id="modalBack">← 返回</div>
-  <div class="modal-content">
+  <div class="modal-card">
     <img class="cover-full" id="modalCover" src="">
     <div class="detail-body">
       <div class="detail-meta"><span id="modalTag"></span> · <span id="modalSource"></span></div>
@@ -140,6 +159,7 @@
       <div class="detail-summary" id="modalSummary"></div>
       <a class="detail-link" id="modalLink" href="#" target="_blank">查看原文 →</a>
     </div>
+    <div class="close-hint" id="closeHint">点击空白处关闭</div>
   </div>
 </div>
 
@@ -258,10 +278,12 @@ document.querySelectorAll('.tab-item').forEach(tab => {
   });
 });
 
-// ── Modal ──
+// Modal (popup card with blurred backdrop)
 const modal = document.getElementById('modal');
-document.getElementById('modalBack').addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
-modal.addEventListener('click', e => { if(e.target===modal){modal.classList.remove('open');document.body.style.overflow='';} });
+modal.addEventListener('click', e => {
+  if(e.target === modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
+});
+document.getElementById('closeHint').addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
 document.addEventListener('keydown', e => { if(e.key==='Escape'&&modal.classList.contains('open')){modal.classList.remove('open');document.body.style.overflow='';} });
 </script>
 </body>
