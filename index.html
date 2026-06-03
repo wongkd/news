@@ -6,23 +6,22 @@
 <title>宋嘉儀24小时专属助理</title>
 <style>
   :root {
-    --bg: #f0f2f8;
+    --bg: #f5f5f5;
     --card: #ffffff;
-    --text: #1a1a2e;
-    --sub: #6b7280;
-    --accent: #6366f1;
-    --accent-light: #eef2ff;
-    --border: #e5e7eb;
+    --text: #1a1a1a;
+    --sub: #999999;
+    --accent: #ff2442;
+    --tag-game: #ff6b81;
+    --tag-hardware: #0abde3;
+    --tag-cn-ai: #ff9f43;
+    --tag-global-ai: #6c5ce7;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0a0a14;
-      --card: #141428;
-      --text: #e5e7eb;
-      --sub: #9ca3af;
-      --accent: #818cf8;
-      --accent-light: #1e1b4b;
-      --border: #2d2d4a;
+      --bg: #111111;
+      --card: #1e1e1e;
+      --text: #e8e8e8;
+      --sub: #777777;
     }
   }
 
@@ -32,147 +31,294 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
 
-  /* ── Top Nav Bar ── */
-  .navbar {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    backdrop-filter: blur(12px);
+  /* ── Header ── */
+  .header {
+    padding: 36px 20px 10px;
+    text-align: center;
   }
-  .navbar .brand {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .navbar .logo {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 16px; font-weight: 700;
-  }
-  .navbar .title {
-    font-size: 17px; font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-  .navbar .badge {
-    font-size: 11px; background: var(--accent-light);
-    color: var(--accent); padding: 2px 10px; border-radius: 10px;
-    font-weight: 600;
-  }
-
-  /* ── Status bar ── */
-  .status-bar {
-    margin: 0 16px 0;
-    padding: 10px 14px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 13px; color: var(--sub);
-    transform: translateY(-6px);
-  }
-  .status-bar .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #22c55e;
-    margin-right: 6px;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-  .status-bar .refresh {
-    color: var(--accent); font-size: 12px; cursor: pointer;
-    background: none; border: none; font-family: inherit;
-  }
-
-  /* ── Content iframe ── */
-  .frame-wrap {
-    margin: 0 16px 20px;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-  iframe {
-    width: 100%; min-height: 100vh; border: none;
+  .header .icon-phone {
+    font-size: 28px;
     display: block;
+    margin-bottom: 4px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .header .sub {
+    font-size: 12px;
+    color: var(--sub);
+    margin-top: 4px;
+  }
+
+  /* ── Card List ── */
+  .feed {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 12px 14px 60px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+  }
+  /* 果冻软弹动画 */
+  .card:active {
+    transform: scale(0.96);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  }
+  /* 点击回弹 — 用 JS 触发 */
+  .card.bounce {
+    animation: jellyBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes jellyBounce {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(0.94); }
+    50%  { transform: scale(0.97); }
+    70%  { transform: scale(1.03); }
+    85%  { transform: scale(0.99); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── Top color stripe ── */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 18px 18px 0 0;
+  }
+  .card.game::before  { background: var(--tag-game); }
+  .card.hardware::before  { background: var(--tag-hardware); }
+  .card.cn-ai::before  { background: var(--tag-cn-ai); }
+  .card.global-ai::before  { background: var(--tag-global-ai); }
+
+  /* ── Card inner ── */
+  .card .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .card.game .tag { background: var(--tag-game); }
+  .card.hardware .tag { background: var(--tag-hardware); }
+  .card.cn-ai .tag { background: var(--tag-cn-ai); }
+  .card.global-ai .tag { background: var(--tag-global-ai); }
+
+  .card h2 {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .card h2 a:hover {
+    color: var(--accent);
+  }
+
+  .card .meta {
+    font-size: 11px;
+    color: var(--sub);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card .meta .source-name {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .card .summary {
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 22px 0 10px 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-title .count {
+    font-size: 12px;
+    color: var(--sub);
+    font-weight: 400;
   }
 
   /* ── Footer ── */
   .footer {
-    text-align: center; padding: 20px 16px 40px;
-    font-size: 12px; color: var(--sub);
+    text-align: center;
+    padding: 30px 16px 50px;
+    font-size: 11px;
+    color: var(--sub);
   }
   .footer a { color: var(--accent); text-decoration: none; }
 
-  /* ── Mobile tweaks ── */
+  /* ── Ripple on tap ── */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    transform: scale(0);
+    animation: rippleAnim 0.6s ease-out;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
   @media (max-width: 480px) {
-    .navbar { padding: 10px 14px; }
-    .navbar .title { font-size: 15px; }
-    .frame-wrap { margin: 0 8px 12px; border-radius: 10px; }
+    .feed { padding: 10px 10px 50px; }
+    .card { padding: 16px 14px 14px; border-radius: 16px; }
+    .card h2 { font-size: 14px; }
+    .header { padding: 30px 16px 8px; }
+    .header h1 { font-size: 20px; }
   }
 </style>
 </head>
 <body>
 
-<div class="navbar">
-  <div class="brand">
-    <div class="logo">嘉</div>
-    <span class="title">☎️ 嘉儀资讯</span>
+<div class="header">
+  <span class="icon-phone">☎️</span>
+  <h1>宋嘉儀24小时专属助理</h1>
+  <div class="sub">每日资讯精选 · 2026年6月3日 · 共6条</div>
+</div>
+
+<div class="feed">
+
+  <!-- ====== 游戏圈 ====== -->
+  <div class="section-title">🎮 游戏圈<span class="count">· 2条</span></div>
+
+  <div class="card game">
+    <span class="tag">游戏圈</span>
+    <h2><a href="https://www.3dmgame.com/news/game/" target="_blank">Maverick Games 公布首作《Clutch》：前极限竞速创意总监打造开放世界驾驶游戏</a></h2>
+    <div class="meta">
+      <span class="source-name">3DM游戏网</span>
+      <span>1 小时前</span>
+    </div>
+    <div class="summary">由前《极限竞速：地平线》创意总监迈克·布朗创立的独立工作室 Maverick Games 公布了首个作品——开放世界动作驾驶游戏《Clutch》，预计 2027 年春季发售。</div>
   </div>
-  <span class="badge" id="dateBadge">加载中…</span>
-</div>
 
-<div class="status-bar">
-  <span><span class="dot"></span> 简报已就绪</span>
-  <button class="refresh" onclick="location.reload()">↻ 刷新</button>
-</div>
+  <div class="card game">
+    <span class="tag">游戏圈</span>
+    <h2><a href="https://news.yxrb.net/" target="_blank">腾讯游戏发布会：即将推出生化模式 PVE，全新地图"湾区"亮相</a></h2>
+    <div class="meta">
+      <span class="source-name">游戏日报</span>
+      <span>2 小时前</span>
+    </div>
+    <div class="summary">腾讯游戏发布会上，制作人 117 宣布下赛季推出生化模式，并同步推出丧尸主题新地图"湾区"，PVE 玩法迎来重大更新。</div>
+  </div>
 
-<div class="frame-wrap">
-  <iframe id="briefingFrame" src="briefing.html" title="宋嘉儀24小时专属助理"
-          sandbox="allow-same-origin allow-scripts"
-          onload="onFrameLoad()" onerror="onFrameError()">
-  </iframe>
+  <!-- ====== 电脑硬件圈 ====== -->
+  <div class="section-title">💻 电脑硬件圈<span class="count">· 2条</span></div>
+
+  <div class="card hardware">
+    <span class="tag">硬件圈</span>
+    <h2><a href="https://www.ithome.com/0/958/088.htm" target="_blank">英伟达 RTX Spark 处理器正式发布：20核 Grace CPU + Blackwell RTX GPU，AI算力 1 petaflop</a></h2>
+    <div class="meta">
+      <span class="source-name">IT之家</span>
+      <span>今天 09:00</span>
+    </div>
+    <div class="summary">COMPUTEX 2026 上黄仁勋亲自发布 RTX Spark，由联发科合作 20 核 Grace CPU + 6144 CUDA 核心 Blackwell GPU 组成，机身仅 14mm 厚、1.36kg，128GB 统一内存。</div>
+  </div>
+
+  <div class="card hardware">
+    <span class="tag">硬件圈</span>
+    <h2><a href="https://pc.zol.com.cn/1192/11923520.html" target="_blank">英特尔推 LGA 1954 长周期插槽：三代 CPU 免换主板升级</a></h2>
+    <div class="meta">
+      <span class="source-name">ZOL</span>
+      <span>今天 08:30</span>
+    </div>
+    <div class="summary">告别频繁换主板！英特尔公布 LGA 1954 插槽规划，拟实现三代 CPU 共用同一插槽，大幅降低硬件升级成本。COMPUTEX 2026 期间正式披露细节。</div>
+  </div>
+
+  <!-- ====== 中国 AI 资讯 ====== -->
+  <div class="section-title">🇨🇳 中国AI资讯<span class="count">· 1条</span></div>
+
+  <div class="card cn-ai">
+    <span class="tag">中国AI</span>
+    <h2><a href="https://x.com/TencentHunyuan/status/2061372535267357029" target="_blank">腾讯混元发布 Hy-Memory 记忆插件 + 智谱冲刺科创板 + 上海"十五五"AI规划落地</a></h2>
+    <div class="meta">
+      <span class="source-name">腾讯混元 / 智谱 / 上海发布</span>
+      <span>今天</span>
+    </div>
+    <div class="summary">国内 AI 本周动作密集：腾讯混元推出智能体长期记忆插件 Hy-Memory（记忆数量减少 70%+），智谱正式提交 A 股科创板上市申请，上海发布"十五五"服务业规划重点支持多模态智能体与具身智能。</div>
+  </div>
+
+  <!-- ====== 海外 AI 资讯 ====== -->
+  <div class="section-title">🌍 海外AI资讯<span class="count">· 1条</span></div>
+
+  <div class="card global-ai">
+    <span class="tag">海外AI</span>
+    <h2><a href="https://www.anthropic.com/news/confidential-draft-s1-sec" target="_blank">Anthropic 秘密提交 IPO 估值近万亿 + OpenAI 密歇根 1GW 数据中心破土 + COMPUTEX 2026 AI 盛宴</a></h2>
+    <div class="meta">
+      <span class="source-name">Anthropic / OpenAI / COMPUTEX</span>
+      <span>今天</span>
+    </div>
+    <div class="summary">Anthropic 秘密提交 S-1 草案，估值 9650 亿美元；OpenAI 启动密歇根 Stargate 1GW 数据中心建设；COMPUTEX 2026 开幕，1500 家展商聚焦 AI 运算、机器人与次世代科技。</div>
+  </div>
+
 </div>
 
 <div class="footer">
-  数据来源：AI HOT + 游戏/硬件实时资讯 · 每日 08:00 自动更新
+  宋嘉儀24小时专属助理 · 每日 08:00 自动更新
 </div>
 
 <script>
-  // ── Update date badge ──
-  const now = new Date();
-  const bj = new Date(now.getTime() + 8 * 60 * 60 * 1000);
-  const y = bj.getUTCFullYear();
-  const m = String(bj.getUTCMonth() + 1).padStart(2, '0');
-  const d = String(bj.getUTCDate()).padStart(2, '0');
-  document.getElementById('dateBadge').textContent = `${y}/${m}/${d}`;
+  // ── 果冻点击动画 + 水波纹 ──
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('pointerdown', function(e) {
+      // 果冻回弹
+      this.classList.remove('bounce');
+      void this.offsetWidth; // reflow
+      this.classList.add('bounce');
 
-  // ── Frame load/error handlers ──
-  function onFrameLoad() {
-    try {
-      // Try to match frame height to content
-      const frame = document.getElementById('briefingFrame');
-      const doc = frame.contentDocument || frame.contentWindow.document;
-      if (doc && doc.body) {
-        const h = doc.body.scrollHeight;
-        frame.style.minHeight = Math.max(h, 600) + 'px';
-      }
-    } catch(e) {
-      // Cross-origin, ignore
-    }
-  }
-
-  function onFrameError() {
-    document.querySelector('.status-bar span').innerHTML =
-      '<span class="dot" style="background:#f59e0b"></span> 简报加载中，请稍后刷新';
-  }
+      // 水波纹
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      this.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    });
+  });
 </script>
 
 </body>
