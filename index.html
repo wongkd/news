@@ -9,19 +9,19 @@
     --bg: #f5f5f5;
     --card: #ffffff;
     --text: #111111;
-    --sub: #888888;
+    --sub: #999999;
     --accent: #ff2442;
-    --shadow: 0 2px 12px rgba(0,0,0,0.04);
-    --shadow-press: 0 1px 4px rgba(0,0,0,0.06);
+    --tab-active: #111111;
+    --tab-inactive: #999999;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0d0d0d;
-      --card: #1a1a1a;
+      --bg: #111111;
+      --card: #1c1c1c;
       --text: #e8e8e8;
       --sub: #777777;
-      --shadow: 0 2px 12px rgba(0,0,0,0.15);
-      --shadow-press: 0 1px 4px rgba(0,0,0,0.2);
+      --tab-active: #e8e8e8;
+      --tab-inactive: #666666;
     }
   }
 
@@ -33,109 +33,121 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Header ── */
-  .header {
-    padding: 40px 20px 20px; text-align: center;
+  /* ── Top Bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,245,245,0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 12px 16px 8px;
   }
-  .header .phone-wrap {
-    display: inline-block; position: relative; cursor: pointer; user-select: none;
+  @media (prefers-color-scheme: dark) {
+    .top-bar { background: rgba(17,17,17,0.85); }
   }
-  .header .icon-phone {
-    font-size: 32px; display: block; line-height: 1;
-    transition: transform 0.3s ease;
+
+  .top-bar .brand-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; margin-bottom: 10px;
   }
-  .phone-wrap.pickup .icon-phone {
-    animation: phonePickup 0.8s ease;
+  .top-bar .phone-icon {
+    font-size: 22px; cursor: pointer; user-select: none;
+    transition: transform 0.3s ease; line-height: 1;
   }
+  .phone-icon.pickup { animation: phonePickup 0.8s ease; }
   @keyframes phonePickup {
     0%   { transform: translateY(0) rotate(0deg); }
-    20%  { transform: translateY(-10px) rotate(-8deg); }
-    40%  { transform: translateY(-7px) rotate(6deg); }
-    60%  { transform: translateY(-12px) rotate(-4deg); }
-    80%  { transform: translateY(-5px) rotate(2deg); }
+    20%  { transform: translateY(-8px) rotate(-6deg); }
+    40%  { transform: translateY(-6px) rotate(5deg); }
+    60%  { transform: translateY(-10px) rotate(-3deg); }
+    80%  { transform: translateY(-4px) rotate(2deg); }
     100% { transform: translateY(0) rotate(0deg); }
   }
-  .phone-bubble {
-    position: absolute; top: -28px; right: -44px;
-    background: var(--accent); color: #fff;
-    font-size: 11px; font-weight: 600; padding: 3px 9px;
-    border-radius: 12px 12px 4px 12px;
-    opacity: 0; transform: translateY(6px) scale(0.8);
-    pointer-events: none; white-space: nowrap;
+  .top-bar .brand-name {
+    font-size: 16px; font-weight: 600; letter-spacing: 0.6px;
   }
-  .phone-wrap.pickup .phone-bubble {
-    animation: bubblePop 1.5s ease forwards;
-  }
-  @keyframes bubblePop {
-    0%   { opacity: 0; transform: translateY(6px) scale(0.8); }
-    15%  { opacity: 1; transform: translateY(0) scale(1.1); }
-    25%  { transform: translateY(-2px) scale(1); }
-    70%  { opacity: 1; transform: translateY(-4px) scale(1); }
-    100% { opacity: 0; transform: translateY(-8px) scale(0.9); }
-  }
-  .header h1 { font-size: 18px; font-weight: 500; letter-spacing: 1px; margin-top: 8px; }
-  .header .sub { font-size: 11px; color: var(--sub); margin-top: 4px; letter-spacing: 0.4px; }
 
-  /* ── Section ── */
-  .section { max-width: 620px; margin: 0 auto 20px; padding: 0 10px; }
-  .section-label {
-    font-size: 12px; color: var(--sub); padding: 0 4px 10px;
-    letter-spacing: 0.4px; font-weight: 400;
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none; -ms-overflow-style: none;
+    padding: 0;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-item {
+    flex-shrink: 0; padding: 6px 16px;
+    font-size: 14px; color: var(--tab-inactive); font-weight: 400;
+    cursor: pointer; position: relative; transition: color 0.2s;
+    white-space: nowrap; border: none; background: none; font-family: inherit;
+  }
+  .tab-item.active { color: var(--tab-active); font-weight: 600; }
+  .tab-item.active::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 2.5px; border-radius: 2px; background: var(--tab-active);
   }
 
   /* ── Masonry ── */
-  .masonry { column-count: 2; column-gap: 10px; }
+  .masonry {
+    max-width: 620px; margin: 0 auto;
+    padding: 4px 12px 60px;
+    column-count: 2; column-gap: 10px;
+  }
 
   /* ── Card ── */
   .card {
     break-inside: avoid; margin-bottom: 10px;
-    background: var(--card); border-radius: 16px; overflow: hidden;
-    box-shadow: var(--shadow); cursor: pointer;
+    background: var(--card); border-radius: 20px; overflow: hidden;
+    cursor: pointer; position: relative;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
     transition: transform 0.15s cubic-bezier(0.22, 0.61, 0.36, 1),
                 box-shadow 0.15s ease;
+    display: block;
   }
   .card:active {
     transform: translateY(2px) scale(0.985);
-    box-shadow: var(--shadow-press);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   }
+  .card.hidden { display: none; }
 
-  .card .cover {
-    width: 100%; display: block;
-    aspect-ratio: 4/3; object-fit: cover;
-    background: #e8e8e8;
+  /* Image fallback: gradient bg always visible */
+  .card .img-wrap {
+    position: relative; width: 100%;
+    aspect-ratio: 3/4; overflow: hidden;
   }
-  @media (prefers-color-scheme: dark) { .card .cover { background: #2a2a2a; } }
-
-  .card .body { padding: 10px 12px 14px; }
-
-  .card .meta-row {
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 5px;
+  .card .img-wrap .bg-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
   }
+  .card.game .img-wrap .bg-gradient { background: linear-gradient(135deg, #e5536e, #d63384); }
+  .card.hardware .img-wrap .bg-gradient { background: linear-gradient(135deg, #0088a9, #00b4d8); }
+  .card.ai .img-wrap .bg-gradient { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+
+  .card .img-wrap img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1;
+  }
+  /* If image fails to load, gradient shows through */
+  .card .img-wrap img[src=""],
+  .card .img-wrap img:not([src]) { display: none; }
+
+  .card .body { padding: 8px 12px 12px; position: relative; z-index: 2; }
+
   .card .meta-tag {
     font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+    margin-bottom: 3px;
   }
   .card.game .meta-tag { color: #e5536e; }
   .card.hardware .meta-tag { color: #0090ad; }
   .card.ai .meta-tag { color: #6c5ce7; }
 
-  .card .meta-source {
-    font-size: 10px; color: var(--sub); margin-left: auto;
-  }
-
   .card h2 {
-    font-size: 13px; font-weight: 500; line-height: 1.5;
+    font-size: 12px; font-weight: 500; line-height: 1.45; color: var(--text);
     display: -webkit-box; -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; overflow: hidden;
   }
-
-  /* ── Footer ── */
-  .footer {
-    text-align: center; padding: 36px 16px 50px;
-    font-size: 11px; color: var(--sub); letter-spacing: 0.3px;
+  .card .source {
+    font-size: 10px; color: var(--sub); margin-top: 4px;
   }
 
-  /* ── Modal ── */
+  /* ── Detail Modal ── */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 999;
     background: var(--bg);
@@ -150,23 +162,18 @@
     background: var(--bg);
     padding: 14px 16px; font-size: 14px; font-weight: 500;
     cursor: pointer; display: flex; align-items: center; gap: 6px;
-    letter-spacing: 0.3px;
-    border-bottom: 0.5px solid rgba(128,128,128,0.08);
   }
-
   .modal-content { max-width: 640px; margin: 0 auto; padding: 0 0 50px; }
   .modal-content .cover-full {
     width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover;
-    background: #e8e8e8;
+    background: linear-gradient(135deg, #667eea, #764ba2);
   }
   .modal-content .detail-body { padding: 20px 18px 30px; }
   .modal-content .detail-meta {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 11px; color: var(--sub); margin-bottom: 14px;
+    font-size: 12px; color: var(--sub); margin-bottom: 14px;
   }
   .modal-content .detail-title {
-    font-size: 20px; font-weight: 500; line-height: 1.45; margin-bottom: 16px;
-    letter-spacing: 0.3px;
+    font-size: 20px; font-weight: 600; line-height: 1.45; margin-bottom: 16px;
   }
   .modal-content .detail-summary {
     font-size: 14px; color: var(--sub); line-height: 1.85; margin-bottom: 28px;
@@ -175,164 +182,111 @@
     display: inline-block; font-size: 12px; color: var(--accent);
     text-decoration: none; font-weight: 500;
     padding: 8px 18px; border: 1px solid var(--accent);
-    border-radius: 20px; cursor: pointer; letter-spacing: 0.3px;
+    border-radius: 20px; cursor: pointer;
   }
 
   @media (max-width: 480px) {
-    .masonry { column-gap: 8px; }
-    .card .body { padding: 8px 10px 12px; }
-    .card h2 { font-size: 12px; }
-    .header { padding: 34px 16px 16px; }
-    .header h1 { font-size: 17px; }
+    .masonry { padding: 4px 8px 50px; column-gap: 8px; }
+    .card { border-radius: 16px; margin-bottom: 8px; }
+    .card .body { padding: 6px 10px 10px; }
+    .card h2 { font-size: 11px; }
+    .top-bar { padding: 10px 12px 6px; }
+    .tab-item { padding: 5px 12px; font-size: 13px; }
     .modal-content .detail-title { font-size: 18px; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="phone-wrap" id="phoneWrap">
-    <span class="icon-phone">☎️</span>
-    <span class="phone-bubble">喂喂喂</span>
+<!-- ── Top Bar ── -->
+<div class="top-bar">
+  <div class="brand-row">
+    <span class="phone-icon" id="phoneIcon">☎️</span>
+    <span class="brand-name">宋嘉儀 · 24小时专属助理</span>
   </div>
-  <h1>宋嘉儀 · 24小时专属助理</h1>
-  <div class="sub">每日资讯精选 · 2026.06.03 · 12条</div>
-</div>
-
-<!-- ====== 游戏圈 4条 ====== -->
-<div class="section">
-  <div class="section-label">游戏圈 · 4条</div>
-  <div class="masonry">
-
-    <div class="card game" data-img="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400" data-url="https://news.17173.com/content/06032026/064803381.shtml" data-title="索尼 State of Play 汇总：金刚狼、新战神、古墓丽影重制版等海量新作公布" data-summary="Sony 在 State of Play 上展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭 Townfall 新预告公开，堪称近年来最炸裂的一次发布会。" data-source="17173" data-tag="游戏圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">游戏圈</span><span class="meta-source">17173</span></div>
-        <h2>索尼 State of Play：金刚狼、新战神、古墓丽影重制版等海量新作公布</h2>
-      </div>
-    </div>
-
-    <div class="card game" data-img="https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400" data-url="https://www.sohu.com/a/1029702669_122598898" data-title="2026年6月新游发售表：NS2《星际火狐》《FF7重生》登场，《热血西游记》上线" data-summary="6月游戏阵容明显加强：NS2 迎来《星际火狐》和《最终幻想7：重生》；Switch 有《热血西游记》《一起开火车2》《潜水员戴夫：丛林》；端午三天假期不调休，宅家打游戏的好时机。" data-source="腾讯新闻" data-tag="游戏圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">游戏圈</span><span class="meta-source">腾讯新闻</span></div>
-        <h2>2026年6月新游发售表：NS2《星际火狐》《FF7重生》登场</h2>
-      </div>
-    </div>
-
-    <div class="card game" data-img="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400" data-url="https://www.msn.cn/" data-title="5月158款游戏版号获批，腾讯《追逐卡蕾多》网易《诡影藏锋》过审" data-summary="国家新闻出版署公布5月版号：154款国产游戏 + 4款进口游戏获批。腾讯《追逐卡蕾多》、网易《诡影藏锋》、莉莉丝《小冰冰斗蛐蛐》等大作在列。" data-source="新京报" data-tag="游戏圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">游戏圈</span><span class="meta-source">新京报</span></div>
-        <h2>5月158款游戏版号获批，腾讯网易多款大作过审</h2>
-      </div>
-    </div>
-
-    <div class="card game" data-img="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400" data-url="https://www.3dmgame.com/news/game/" data-title="Maverick Games《Clutch》：前地平线创意总监打造开放世界驾驶游戏" data-summary="由前《极限竞速：地平线》创意总监迈克·布朗创立的独立工作室 Maverick Games 公布了首个作品——开放世界动作驾驶游戏《Clutch》，预计 2027 年春季发售。" data-source="3DM游戏网" data-tag="游戏圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">游戏圈</span><span class="meta-source">3DM游戏网</span></div>
-        <h2>Maverick Games《Clutch》：前地平线创意总监打造开放世界驾驶游戏</h2>
-      </div>
-    </div>
-
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-item active" data-cat="all">全部</button>
+    <button class="tab-item" data-cat="game">游戏圈</button>
+    <button class="tab-item" data-cat="hardware">硬件圈</button>
+    <button class="tab-item" data-cat="ai">AI资讯</button>
   </div>
 </div>
 
-<!-- ====== 电脑硬件圈 4条 ====== -->
-<div class="section">
-  <div class="section-label">电脑硬件圈 · 4条</div>
-  <div class="masonry">
+<!-- ── Cards ── -->
+<div class="masonry" id="masonry">
 
-    <div class="card hardware" data-img="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400" data-url="https://www.sohu.com/a/1030951328_121761735" data-title="COMPUTEX 2026 重磅：英伟达正式入局PC CPU，联手联发科正面对线英特尔" data-summary="本周最大消息级新闻：英伟达联手联发科推出基于 Arm 架构的 RTX Spark 芯片，配备 20 核 Grace CPU 与 Blackwell RTX GPU，128GB 统一内存、AI 算力达 1 petaflop。消息一出，美股半导体板块直接跳水，整个 PC 行业被彻底颠覆。" data-source="搜狐科技" data-tag="硬件圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">硬件圈</span><span class="meta-source">搜狐科技</span></div>
-        <h2>COMPUTEX 2026：英伟达正式入局PC CPU，联手联发科对线英特尔</h2>
-      </div>
-    </div>
-
-    <div class="card hardware" data-img="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400" data-url="https://pc.zol.com.cn/1192/11923520.html" data-title="英特尔推 LGA 1954 长周期插槽：三代 CPU 免换主板升级，DIY玩家欢呼" data-summary="英特尔公布 LGA 1954 插槽规划，拟实现三代 CPU 共用同一插槽，大幅降低硬件升级成本。COMPUTEX 2026 期间正式披露，标志 CPU 升级进入长周期时代。同时微星 MSI 展出 40 周年全系列新品，掌机和旗舰笔电齐发。" data-source="ZOL / 快科技" data-tag="硬件圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">硬件圈</span><span class="meta-source">ZOL / 快科技</span></div>
-        <h2>英特尔推 LGA 1954 长周期插槽：三代 CPU 免换主板 + 微星 40 周年全系新品</h2>
-      </div>
-    </div>
-
-    <div class="card hardware" data-img="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400" data-url="https://www.msn.cn/" data-title="COMPUTEX 2026：1500家展商聚焦AI运算与机器人，老牌厂商全面压注AI PC" data-summary="为期四天的台北国际电脑展共吸引 1500 家企业、6000 个展位，聚焦 AI 运算、机器人及次世代科技。从英伟达到微星、华硕、技嘉，AI PC 成为全展最大公约数。" data-source="MSN / 综合" data-tag="硬件圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">硬件圈</span><span class="meta-source">综合报道</span></div>
-        <h2>COMPUTEX 2026：1500家展商聚焦AI运算与机器人</h2>
-      </div>
-    </div>
-
-    <div class="card hardware" data-img="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400" data-url="https://finance.sina.com.cn/tech/digi/2026-05-29/doc-inhzqimi9423178.shtml" data-title="先马预热 COMPUTEX：双曲面钢化玻璃机箱 + 60W PD-out USB-C 机电散全系上新" data-summary="国产品牌先马将在 COMPUTEX 2026 展出全新 V80 和 V70 机箱，前脸双曲面钢化玻璃 + 环境灯效悬浮设计，支持 60W PD-out USB-C 接口，电源和散热产品同步更新。" data-source="新浪科技" data-tag="硬件圈">
-      <img class="cover" src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">硬件圈</span><span class="meta-source">新浪科技</span></div>
-        <h2>先马 COMPUTEX 预热：双曲面钢化玻璃机箱 + 机电散全系上新</h2>
-      </div>
-    </div>
-
+  <!-- ====== 游戏圈 ====== -->
+  <div class="card game" data-cat="game" data-img="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" data-url="https://news.17173.com/content/06032026/064803381.shtml" data-title="索尼 State of Play 汇总：金刚狼、新战神、古墓丽影重制版等海量新作公布" data-summary="Sony 在 State of Play 上展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭 Townfall 新预告公开，堪称近年来最炸裂的一次发布会，拉开夏季游戏宣发大战序幕。" data-source="17173">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">游戏圈</div><h2>索尼 State of Play：金刚狼、新战神、古墓丽影重制版等海量新作公布</h2><div class="source">17173</div></div>
   </div>
-</div>
 
-<!-- ====== AI资讯 4条 ====== -->
-<div class="section">
-  <div class="section-label">AI资讯 · 4条</div>
-  <div class="masonry">
-
-    <div class="card ai" data-img="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400" data-url="https://x.com/TencentHunyuan/status/2061372535267357029" data-title="腾讯混元发布 Hy-Memory 记忆插件：记忆数量减70%、token消耗降35%" data-summary="腾讯混元推出专为长期协作智能体设计的记忆插件 Hy-Memory，基于6层记忆框架与双系统架构。记忆数量减少70%以上，单条信息密度提升45%，超长上下文 token 消耗降低35%。" data-source="腾讯混元" data-tag="AI资讯">
-      <img class="cover" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">AI资讯</span><span class="meta-source">腾讯混元</span></div>
-        <h2>腾讯混元发布 Hy-Memory：记忆减70%、token消耗降35%</h2>
-      </div>
-    </div>
-
-    <div class="card ai" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400" data-url="https://www.anthropic.com/news/confidential-draft-s1-sec" data-title="Anthropic 秘密提交 IPO S-1 草案：估值近万亿，H轮刚融 650 亿美元" data-summary="Anthropic 向 SEC 秘密提交 IPO 申请，估值达 9650 亿美元。公司刚完成由 Altimeter Capital 领投的 650 亿美元 H 轮融资，并发布了 Claude Opus 4.8 模型。" data-source="Anthropic" data-tag="AI资讯">
-      <img class="cover" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">AI资讯</span><span class="meta-source">Anthropic</span></div>
-        <h2>Anthropic 秘密提交 IPO：估值 9650 亿美元，H轮刚融 650 亿</h2>
-      </div>
-    </div>
-
-    <div class="card ai" data-img="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400" data-url="https://www.ithome.com/0/958/444.htm" data-title="智谱冲刺科创板：拟更名 Z.AI，募资投向大模型和 MaaS 平台" data-summary="智谱正式向中国监管机构申请 A 股科创板上市，拟发行占完成后总股本2%-8%的新股，募集资金用于 AI 通用基座大模型和大模型 MaaS 一站式服务平台。同时拟将英文名变更为 Z.AI Co., Ltd." data-source="IT之家" data-tag="AI资讯">
-      <img class="cover" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">AI资讯</span><span class="meta-source">IT之家</span></div>
-        <h2>智谱冲刺科创板：拟更名 Z.AI，募资投向大模型和 MaaS</h2>
-      </div>
-    </div>
-
-    <div class="card ai" data-img="https://images.unsplash.com/photo-1488229297570-58520851e868?w=400" data-url="https://openai.com/index/stargate-michigan-data-center" data-title="OpenAI 密歇根 Stargate 1GW 数据中心破土 + 上海"十五五"AI规划落地" data-summary="OpenAI 启动密歇根 Stargate 1GW 数据中心建设，旨在扩大 AI 算力可及性。同时上海发布"十五五"服务业规划：重点支持多模态智能体开发、智能驾驶多场景应用和具身智能整机产品。" data-source="OpenAI / 上海发布" data-tag="AI资讯">
-      <img class="cover" src="https://images.unsplash.com/photo-1488229297570-58520851e868?w=400&h=300&fit=crop&auto=format" alt="" loading="lazy" onerror="this.style.display='none'">
-      <div class="body">
-        <div class="meta-row"><span class="meta-tag">AI资讯</span><span class="meta-source">OpenAI / 上海发布</span></div>
-        <h2>OpenAI Stargate 1GW 数据中心破土 + 上海十五五 AI 规划落地</h2>
-      </div>
-    </div>
-
+  <div class="card game" data-cat="game" data-img="https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400&h=533&fit=crop&auto=format" data-url="https://www.sohu.com/a/1029702669_122598898" data-title="2026年6月新游发售表：NS2《星际火狐》《FF7重生》登场" data-summary="6月游戏阵容明显加强：NS2 迎来《星际火狐》和《最终幻想7：重生》等第一方/3A大作；Switch 有《热血西游记》《一起开火车2》《潜水员戴夫：丛林》。端午三天假期不调休，正是宅家打游戏的好时机。" data-source="腾讯新闻">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1552820728-8b83bb6b2f51?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">游戏圈</div><h2>6月新游发售表：NS2《星际火狐》《FF7重生》登场</h2><div class="source">腾讯新闻</div></div>
   </div>
-</div>
 
-<div class="footer">
-  宋嘉儀24小时专属助理 · 每日 08:00 自动更新
+  <div class="card game" data-cat="game" data-img="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=533&fit=crop&auto=format" data-url="https://www.msn.cn/" data-title="5月158款游戏版号获批：腾讯《追逐卡蕾多》网易《诡影藏锋》在列" data-summary="国家新闻出版署公布5月版号：154款国产游戏 + 4款进口游戏获批。腾讯《追逐卡蕾多》、网易《诡影藏锋》、朝夕光年《托托比亚》、莉莉丝《小冰冰斗蛐蛐》等大作在列，创今年单月版号数新高。" data-source="新京报">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">游戏圈</div><h2>5月158款游戏版号获批：腾讯网易多款大作过审</h2><div class="source">新京报</div></div>
+  </div>
+
+  <div class="card game" data-cat="game" data-img="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=533&fit=crop&auto=format" data-url="https://www.3dmgame.com/news/game/" data-title="Maverick Games《Clutch》：前地平线创意总监打造开放世界驾驶游戏" data-summary="由前《极限竞速：地平线》创意总监迈克·布朗创立的独立工作室 Maverick Games 公布了首个作品——开放世界动作驾驶游戏《Clutch》，预计 2027 年春季发售。游戏将融合电影级叙事与真实物理驾驶体验。" data-source="3DM游戏网">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">游戏圈</div><h2>Maverick Games《Clutch》：前地平线创意总监打造开放世界驾驶游戏</h2><div class="source">3DM游戏网</div></div>
+  </div>
+
+  <!-- ====== 硬件圈 ====== -->
+  <div class="card hardware" data-cat="hardware" data-img="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400&h=533&fit=crop&auto=format" data-url="https://www.sohu.com/a/1030951328_121761735" data-title="COMPUTEX 2026 重磅：英伟达正式入局PC CPU，联手联发科对线英特尔" data-summary="本周最大消息：英伟达联手联发科推出基于 Arm 的 RTX Spark 芯片，20核 Grace CPU + Blackwell RTX GPU + 128GB统一内存，AI算力达1 petaflop。消息一出美股半导体板块直接跳水，PC行业十年最大变局已到。" data-source="搜狐科技">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">硬件圈</div><h2>COMPUTEX 2026：英伟达正式入局PC CPU，联手联发科对线英特尔</h2><div class="source">搜狐科技</div></div>
+  </div>
+
+  <div class="card hardware" data-cat="hardware" data-img="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=533&fit=crop&auto=format" data-url="https://pc.zol.com.cn/1192/11923520.html" data-title="英特尔 LGA 1954 长周期插槽：三代CPU免换主板 + 微星40周年全系新品齐发" data-summary="英特尔公布 LGA 1954 插槽规划，拟实现三代 CPU 共用同一插槽，升级成本大幅降低。同时微星 MSI 展出 40 周年全系列新品——Titan 18 HX 典藏版笔记本、新一代掌机、创新显卡散热方案等。" data-source="ZOL / 快科技">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">硬件圈</div><h2>英特尔 LGA 1954 长周期插槽：三代CPU免换主板 + 微星全系新品</h2><div class="source">ZOL / 快科技</div></div>
+  </div>
+
+  <div class="card hardware" data-cat="hardware" data-img="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=533&fit=crop&auto=format" data-url="https://www.msn.cn/" data-title="COMPUTEX 2026：1500家展商聚焦AI运算与机器人，AI PC成最大公约数" data-summary="为期四天的台北国际电脑展共吸引 1500 家企业、6000 个展位，聚焦 AI 运算、机器人及次世代科技。从 NVIDIA 到华硕、技嘉、微星，AI PC 和边缘 AI 成为全展两个最大主题。" data-source="综合报道">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">硬件圈</div><h2>COMPUTEX 2026：1500家展商聚焦AI运算与机器人</h2><div class="source">综合报道</div></div>
+  </div>
+
+  <div class="card hardware" data-cat="hardware" data-img="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=533&fit=crop&auto=format" data-url="https://finance.sina.com.cn/tech/digi/2026-05-29/doc-inhzqimi9423178.shtml" data-title="先马 COMPUTEX 预热：双曲面钢化玻璃机箱 + 机电散全系上新" data-summary="国产机电品牌先马在 COMPUTEX 2026 展出 V80、V70 两款重磅机箱新品。V80 前脸双曲面钢化玻璃面板 + 环境灯效悬浮设计，支持 60W PD-out USB-C 接口，电源和散热产品线同步更新。" data-source="新浪科技">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">硬件圈</div><h2>先马 COMPUTEX 预热：双曲面钢化玻璃机箱 + 机电散全系上新</h2><div class="source">新浪科技</div></div>
+  </div>
+
+  <!-- ====== AI资讯 ====== -->
+  <div class="card ai" data-cat="ai" data-img="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=533&fit=crop&auto=format" data-url="https://x.com/TencentHunyuan/status/2061372535267357029" data-title="腾讯混元发布 Hy-Memory：记忆减70%、token消耗降35%的智能体记忆插件" data-summary="腾讯混元推出专为长期协作智能体设计的记忆插件 Hy-Memory，基于6层记忆框架与双系统架构。记忆数量减少70%以上，单条信息密度提升45%，超长上下文场景 token 消耗降低35%，可无缝集成 OpenClaw 等主流智能体框架。" data-source="腾讯混元">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">AI资讯</div><h2>腾讯混元 Hy-Memory：记忆减70%、token消耗降35%</h2><div class="source">腾讯混元</div></div>
+  </div>
+
+  <div class="card ai" data-cat="ai" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=533&fit=crop&auto=format" data-url="https://www.anthropic.com/news/confidential-draft-s1-sec" data-title="Anthropic 秘密提交 IPO：估值9650亿，H轮刚融650亿美元" data-summary="Anthropic 向 SEC 秘密提交 S-1 草案，估值高达 9650 亿美元。公司刚完成由 Altimeter Capital 等领投的 650 亿美元 H 轮融资，并发布 Claude Opus 4.8 模型。IPO 股数和价格尚未确定，将取决于市场条件。" data-source="Anthropic">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">AI资讯</div><h2>Anthropic 秘密提交 IPO：估值9650亿，H轮刚融650亿美元</h2><div class="source">Anthropic</div></div>
+  </div>
+
+  <div class="card ai" data-cat="ai" data-img="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=533&fit=crop&auto=format" data-url="https://www.ithome.com/0/958/444.htm" data-title="智谱冲刺科创板：拟更名 Z.AI，募资投入大模型和 MaaS 平台" data-summary="智谱正式向中国监管机构申请 A 股科创板上市，拟发行占完成后总股本2%-8%的新股，募集资金用于 AI 通用基座大模型和大模型 MaaS 一站式服务平台。公司同时拟将英文名变更为 Z.AI Co., Ltd." data-source="IT之家">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">AI资讯</div><h2>智谱冲刺科创板：拟更名 Z.AI，募资投入大模型和 MaaS</h2><div class="source">IT之家</div></div>
+  </div>
+
+  <div class="card ai" data-cat="ai" data-img="https://images.unsplash.com/photo-1488229297570-58520851e868?w=400&h=533&fit=crop&auto=format" data-url="https://openai.com/index/stargate-michigan-data-center" data-title="OpenAI Stargate 1GW 数据中心破土 + 上海十五五 AI 规划落地" data-summary="OpenAI 启动密歇根 Stargate 1GW 数据中心，旨在扩大 AI 算力可及性。同时上海发布"十五五"服务业规划：重点支持多模态智能体开发、智能驾驶多场景应用、MaaS 推广及具身智能整机产品开发。" data-source="OpenAI / 上海发布">
+    <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1488229297570-58520851e868?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
+    <div class="body"><div class="meta-tag">AI资讯</div><h2>OpenAI Stargate 1GW 数据中心破土 + 上海十五五 AI 规划落地</h2><div class="source">OpenAI / 上海发布</div></div>
+  </div>
+
 </div>
 
 <!-- ── Detail Modal ── -->
 <div class="modal-overlay" id="modal">
   <div class="modal-back" id="modalBack">← 返回</div>
   <div class="modal-content">
-    <img class="cover-full" id="modalImg" src="" alt="">
+    <div class="cover-full" id="modalCover"></div>
     <div class="detail-body">
-      <div class="detail-meta">
-        <span id="modalTag"></span>
-        <span id="modalSource"></span>
-      </div>
+      <div class="detail-meta"><span id="modalTag"></span> · <span id="modalSource"></span></div>
       <div class="detail-title" id="modalTitle"></div>
       <div class="detail-summary" id="modalSummary"></div>
       <a class="detail-link" id="modalLink" href="#" target="_blank">查看原文 →</a>
@@ -341,9 +295,17 @@
 </div>
 
 <script>
+  // ── Lazy load images ──
+  document.querySelectorAll('.card .img-wrap img').forEach(img => {
+    const card = img.closest('.card');
+    const src = card.getAttribute('data-img');
+    if (src) img.src = src;
+    img.onerror = function() { this.style.display = 'none'; };
+  });
+
   // ── Phone refresh ──
-  const phoneWrap = document.getElementById('phoneWrap');
-  phoneWrap.addEventListener('click', function(e) {
+  const phoneIcon = document.getElementById('phoneIcon');
+  phoneIcon.addEventListener('click', function(e) {
     e.stopPropagation();
     this.classList.remove('pickup');
     void this.offsetWidth;
@@ -351,18 +313,38 @@
     setTimeout(() => {
       this.classList.remove('pickup');
       location.reload();
-    }, 1600);
+    }, 1000);
+  });
+
+  // ── Tab switching ──
+  const tabs = document.querySelectorAll('.tab-item');
+  const cards = document.querySelectorAll('.card');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const cat = this.dataset.cat;
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
   });
 
   // ── Card click → modal ──
   const modal = document.getElementById('modal');
   const modalBack = document.getElementById('modalBack');
-
-  document.querySelectorAll('.card').forEach(card => {
+  cards.forEach(card => {
     card.addEventListener('click', function() {
-      document.getElementById('modalImg').src = this.dataset.img || '';
-      document.getElementById('modalTag').textContent = this.dataset.tag;
-      document.getElementById('modalSource').textContent = this.dataset.source;
+      const imgSrc = this.dataset.img || '';
+      document.getElementById('modalCover').style.backgroundImage = 'url(' + imgSrc + ')';
+      document.getElementById('modalCover').style.backgroundSize = 'cover';
+      document.getElementById('modalCover').style.backgroundPosition = 'center';
+      document.getElementById('modalTag').textContent = this.dataset.tag || '';
+      document.getElementById('modalSource').textContent = this.dataset.source || '';
       document.getElementById('modalTitle').textContent = this.dataset.title;
       document.getElementById('modalSummary').textContent = this.dataset.summary;
       document.getElementById('modalLink').href = this.dataset.url;
@@ -372,18 +354,9 @@
     });
   });
 
-  modalBack.addEventListener('click', () => {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      modal.classList.remove('open'); document.body.style.overflow = '';
-    }
-  });
+  modalBack.addEventListener('click', () => { modal.classList.remove('open'); document.body.style.overflow = ''; });
+  modal.addEventListener('click', e => { if (e.target === modal) { modal.classList.remove('open'); document.body.style.overflow = ''; } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) { modal.classList.remove('open'); document.body.style.overflow = ''; } });
 </script>
 
 </body>
