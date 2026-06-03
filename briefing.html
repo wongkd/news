@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI HOT 精选简报 · 2026年6月2日</title>
+<title>宋嘉儀24小时专属助理 · 2026年6月3日</title>
 <style>
 :root {
   --bg: #f8f9fc;
@@ -13,11 +13,10 @@
   --accent: #6366f1;
   --accent-light: #eef2ff;
   --border: #e5e7eb;
-  --tag-model: #ec4899;
-  --tag-product: #8b5cf6;
-  --tag-industry: #f59e0b;
-  --tag-tip: #10b981;
-  --tag-paper: #3b82f6;
+  --tag-game: #f43f5e;
+  --tag-hardware: #06b6d4;
+  --tag-cn-ai: #f97316;
+  --tag-global-ai: #8b5cf6;
   --radius: 12px;
 }
 @media (prefers-color-scheme: dark) {
@@ -32,50 +31,66 @@
   }
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-.container { max-width: 880px; margin: 0 auto; padding: 32px 20px 60px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container { max-width: 880px; margin: 0 auto; padding: 20px 16px 60px; }
 
 /* Header */
-.header { text-align: center; padding: 40px 20px 32px; }
-.header h1 { font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-.header .meta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-.header .meta span { font-size: 14px; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 14px; }
-.header .count-badge { font-size: 14px; color: #fff; background: var(--accent); border-radius: 20px; padding: 4px 14px; font-weight: 600; }
+.header { text-align: center; padding: 28px 16px 24px; }
+.header h1 { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.header .subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+.header .meta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.header .meta span { font-size: 13px; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 3px 12px; }
+.header .count-badge { font-size: 13px; color: #fff; background: var(--accent); border-radius: 20px; padding: 3px 14px; font-weight: 600; }
 
 /* Section */
-.section { margin-bottom: 32px; }
-.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.section-header .dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-.section-header h2 { font-size: 18px; font-weight: 600; }
-.section-header .count { font-size: 13px; color: var(--text-secondary); margin-left: auto; }
+.section { margin-bottom: 28px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-header .icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-size: 17px; font-weight: 600; }
+.section-header .count { font-size: 12px; color: var(--text-secondary); margin-left: auto; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 2px 10px; }
 
 /* Card */
-.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 12px; transition: box-shadow 0.15s; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px; transition: box-shadow 0.15s; border-left: 3px solid transparent; }
 .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-.card .num { display: inline-block; width: 26px; height: 26px; line-height: 26px; text-align: center; border-radius: 6px; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 700; margin-right: 8px; vertical-align: middle; flex-shrink: 0; }
+.card.game { border-left-color: var(--tag-game); }
+.card.hardware { border-left-color: var(--tag-hardware); }
+.card.cn-ai { border-left-color: var(--tag-cn-ai); }
+.card.global-ai { border-left-color: var(--tag-global-ai); }
+
+.card .num { display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 6px; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 700; margin-right: 8px; vertical-align: middle; flex-shrink: 0; }
 .card-title { display: inline; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.5; }
 .card-title a { color: inherit; text-decoration: none; }
 .card-title a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-.card-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 12px; color: var(--text-secondary); flex-wrap: wrap; }
+.card-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 11px; color: var(--text-secondary); flex-wrap: wrap; }
 .card-meta .source { color: var(--accent); font-weight: 500; }
-.card-meta .time { background: var(--accent-light); color: var(--accent); padding: 1px 8px; border-radius: 10px; }
-.card-summary { margin-top: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+.card-meta .time { background: var(--accent-light); color: var(--accent); padding: 1px 7px; border-radius: 8px; }
+.card-summary { margin-top: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+/* Section bg colors */
+.sec-game .icon { background: #fff1f2; }
+.sec-hardware .icon { background: #ecfeff; }
+.sec-cn-ai .icon { background: #fff7ed; }
+.sec-global-ai .icon { background: #f5f3ff; }
+@media (prefers-color-scheme: dark) {
+  .sec-game .icon { background: #2d1520; }
+  .sec-hardware .icon { background: #122d33; }
+  .sec-cn-ai .icon { background: #2d1f10; }
+  .sec-global-ai .icon { background: #1e1b35; }
+}
 
 /* Footer */
-.footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-secondary); border-top: 1px solid var(--border); margin-top: 40px; }
+.footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-secondary); border-top: 1px solid var(--border); margin-top: 32px; }
 .footer a { color: var(--accent); text-decoration: none; }
 
-/* Section colors */
-.sec-models .dot { background: var(--tag-model); }
-.sec-products .dot { background: var(--tag-product); }
-.sec-industry .dot { background: var(--tag-industry); }
-.sec-paper .dot { background: var(--tag-paper); }
-.sec-tip .dot { background: var(--tag-tip); }
-
 @media (max-width: 640px) {
-  .container { padding: 16px 12px 40px; }
-  .header h1 { font-size: 22px; }
-  .card { padding: 14px 16px; }
+  .container { padding: 12px 10px 36px; }
+  .header h1 { font-size: 21px; }
+  .card { padding: 13px 14px; }
 }
 </style>
 </head>
@@ -83,453 +98,111 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 <div class="container">
 
 <div class="header">
-  <h1>🔥 AI HOT 精选简报</h1>
+  <h1>📋 宋嘉儀24小时专属助理</h1>
+  <div class="subtitle">每日资讯精选 — 2026年6月3日</div>
   <div class="meta">
-    <span>2026年6月1日 ~ 6月2日</span>
-    <span class="count-badge">共 39 条精选</span>
+    <span class="count-badge">共 6 条精选</span>
   </div>
 </div>
 
-<!-- ==================== 模型发布/更新 ==================== -->
-<div class="section sec-models">
+<!-- ==================== 游戏圈 ==================== -->
+<div class="section sec-game">
   <div class="section-header">
-    <span class="dot"></span>
-    <h2>🧠 模型发布 / 更新</h2>
-    <span class="count">7 条</span>
+    <div class="icon">🎮</div>
+    <h2>游戏圈</h2>
+    <span class="count">2 条</span>
   </div>
 
-  <div class="card">
+  <div class="card game">
     <span class="num">1</span>
-    <span class="card-title"><a href="https://www.minimax.io/blog/minimax-m3" target="_blank">MiniMax M3：前沿编码、100万token上下文与原生多模态一体模型</a></span>
+    <span class="card-title"><a href="https://www.3dmgame.com/news/game/" target="_blank">Maverick Games 公布首作《Clutch》：前极限竞速创意总监打造开放世界驾驶游戏</a></span>
     <div class="card-meta">
-      <span class="source">MiniMax Blog</span>
-      <span class="time">今天 11:39</span>
+      <span class="source">3DM游戏网</span>
+      <span class="time">1 小时前</span>
     </div>
-    <div class="card-summary">MiniMax M3 采用新型 MSA 稀疏注意力架构，100万token上下文下每token计算成本降至前代的1/20，预填充速度提升9倍以上。SWE-Bench Pro 编码基准得分59.0%，超越 GPT-5.5 和 Gemini 3.1 Pro。</div>
+    <div class="card-summary">由前《极限竞速：地平线》创意总监迈克·布朗创立的独立工作室 Maverick Games 公布了首个作品——开放世界动作驾驶游戏《Clutch》，预计 2027 年春季发售。</div>
   </div>
 
-  <div class="card">
+  <div class="card game">
     <span class="num">2</span>
-    <span class="card-title"><a href="https://qwen.ai/blog?id=qwen3.7-plus" target="_blank">Qwen3.7-Plus：多模态智能体智能</a></span>
+    <span class="card-title"><a href="https://news.yxrb.net/" target="_blank">腾讯游戏发布会：即将推出生化模式 PVE，全新地图"湾区"亮相</a></span>
     <div class="card-meta">
-      <span class="source">Qwen Blog</span>
-      <span class="time">今天 10:00</span>
+      <span class="source">游戏日报</span>
+      <span class="time">2 小时前</span>
     </div>
-    <div class="card-summary">通义千问发布 Qwen3.7-Plus，提供聊天、图像/视频理解、图像生成、文档处理、网页搜索、工具使用及制品生成的全面多模态智能体能力。</div>
+    <div class="card-summary">腾讯游戏发布会上，制作人 117 宣布下赛季推出生化模式，并同步推出丧尸主题新地图"湾区"，PVE 玩法迎来重大更新。</div>
+  </div>
+</div>
+
+<!-- ==================== 电脑硬件圈 ==================== -->
+<div class="section sec-hardware">
+  <div class="section-header">
+    <div class="icon">💻</div>
+    <h2>电脑硬件圈</h2>
+    <span class="count">2 条</span>
   </div>
 
-  <div class="card">
+  <div class="card hardware">
     <span class="num">3</span>
-    <span class="card-title"><a href="https://x.ai/news/composer-2-5" target="_blank">xAI 发布 Composer 2.5</a></span>
+    <span class="card-title"><a href="https://www.ithome.com/0/958/088.htm" target="_blank">英伟达 RTX Spark 处理器正式发布：20核 Grace CPU + Blackwell RTX GPU，AI算力 1 petaflop</a></span>
     <div class="card-meta">
-      <span class="source">xAI News</span>
-      <span class="time">昨天 08:00</span>
+      <span class="source">IT之家</span>
+      <span class="time">今天 09:00</span>
     </div>
-    <div class="card-summary">xAI 最新编程模型 Composer 2.5 现已在 Grok Build 中可用，擅长长时间运行任务和复杂指令，面向 SuperGrok 和 X Premium+ 用户开放。</div>
+    <div class="card-summary">COMPUTEX 2026 上黄仁勋亲自发布 RTX Spark，由联发科合作 20 核 Grace CPU + 6144 CUDA 核心 Blackwell GPU 组成，机身仅 14mm 厚、1.36kg，128GB 统一内存。</div>
   </div>
 
-  <div class="card">
+  <div class="card hardware">
     <span class="num">4</span>
-    <span class="card-title"><a href="https://developer.nvidia.com/blog/develop-physical-ai-reasoning-world-and-action-models-with-nvidia-cosmos-3" target="_blank">NVIDIA Cosmos 3：开发物理AI推理、世界与行动模型</a></span>
+    <span class="card-title"><a href="https://pc.zol.com.cn/1192/11923520.html" target="_blank">英特尔推 LGA 1954 长周期插槽：三代 CPU 免换主板升级</a></span>
     <div class="card-meta">
-      <span class="source">NVIDIA Technical Blog</span>
-      <span class="time">昨天 12:43</span>
+      <span class="source">ZOL</span>
+      <span class="time">今天 08:30</span>
     </div>
-    <div class="card-summary">面向物理AI的前沿基础模型，融合物理推理、世界理解与行动生成能力，帮助机器人、自动驾驶和智能空间理解真实世界并预测事件发展。</div>
+    <div class="card-summary">告别频繁换主板！英特尔公布 LGA 1954 插槽规划，拟实现三代 CPU 共用同一插槽，大幅降低硬件升级成本。COMPUTEX 2026 期间正式披露细节。</div>
+  </div>
+</div>
+
+<!-- ==================== 中国 AI 资讯 ==================== -->
+<div class="section sec-cn-ai">
+  <div class="section-header">
+    <div class="icon">🇨🇳</div>
+    <h2>中国 AI 资讯</h2>
+    <span class="count">1 条</span>
   </div>
 
-  <div class="card">
+  <div class="card cn-ai">
     <span class="num">5</span>
-    <span class="card-title"><a href="https://x.com/NVIDIAAI/status/2061305524700758050" target="_blank">Nemotron 3 Ultra 本周即将发布</a></span>
+    <span class="card-title"><a href="https://x.com/TencentHunyuan/status/2061372535267357029" target="_blank">腾讯混元发布 Hy-Memory 记忆插件 + 智谱冲刺科创板 + 上海"十五五"AI规划落地</a></span>
     <div class="card-meta">
-      <span class="source">NVIDIA AI</span>
-      <span class="time">昨天 12:35</span>
+      <span class="source">腾讯混元 / 智谱 / 上海发布</span>
+      <span class="time">今天</span>
     </div>
-    <div class="card-summary">NVIDIA 预告 Nemotron 3 Ultra 本周即将亮相。</div>
+    <div class="card-summary">国内 AI 本周动作密集：腾讯混元推出智能体长期记忆插件 Hy-Memory（记忆数量减少 70%+），智谱正式提交 A 股科创板上市申请，上海发布"十五五"服务业规划重点支持多模态智能体与具身智能。</div>
+  </div>
+</div>
+
+<!-- ==================== 海外 AI 资讯 ==================== -->
+<div class="section sec-global-ai">
+  <div class="section-header">
+    <div class="icon">🌍</div>
+    <h2>海外 AI 资讯</h2>
+    <span class="count">1 条</span>
   </div>
 
-  <div class="card">
+  <div class="card global-ai">
     <span class="num">6</span>
-    <span class="card-title"><a href="https://huggingface.co/blog/JetBrains/mellum2-launch" target="_blank">Mellum2：JetBrains 推出的 12B 混合专家模型</a></span>
+    <span class="card-title"><a href="https://www.anthropic.com/news/confidential-draft-s1-sec" target="_blank">Anthropic 秘密提交 IPO 估值近万亿 + OpenAI 密歇根 1GW 数据中心破土 + COMPUTEX 2026 AI 盛宴</a></span>
     <div class="card-meta">
-      <span class="source">Hugging Face Blog</span>
-      <span class="time">昨天 23:45</span>
+      <span class="source">Anthropic / OpenAI / COMPUTEX</span>
+      <span class="time">今天</span>
     </div>
-    <div class="card-summary">JetBrains 发布 Mellum2，采用混合专家架构，参数规模 12B。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">7</span>
-    <span class="card-title"><a href="https://x.com/SenseTime_AI/status/2061465029959209106" target="_blank">商汤 SenseNova-U1：解决 AI 图表生成难题</a></span>
-    <div class="card-meta">
-      <span class="source">商汤 SenseTime</span>
-      <span class="time">昨天 23:08</span>
-    </div>
-    <div class="card-summary">SenseNova-U1-8B-MoT-Infographic 专为解决图表生成问题设计，能生成准确图表并支持实时调整设计和布局，已开源模型和效果案例。</div>
-  </div>
-</div>
-
-<!-- ==================== 产品发布/更新 ==================== -->
-<div class="section sec-products">
-  <div class="section-header">
-    <span class="dot"></span>
-    <h2>🚀 产品发布 / 更新</h2>
-    <span class="count">9 条</span>
-  </div>
-
-  <div class="card">
-    <span class="num">8</span>
-    <span class="card-title"><a href="https://x.com/alibaba_cloud/status/2061400724018217381" target="_blank">Apache RocketMQ 发布 AI 专用消息引擎</a></span>
-    <div class="card-meta">
-      <span class="source">阿里云</span>
-      <span class="time">昨天 18:53</span>
-    </div>
-    <div class="card-summary">推出 RocketMQ for AI，专为长时间会话、多智能体工作流和公平资源调度构建，支持 Lite-Topics、有序消息和智能流量整形，解决状态丢失、级联故障和突发负载问题，已开源。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">9</span>
-    <span class="card-title"><a href="https://x.com/TencentHunyuan/status/2061372535267357029" target="_blank">腾讯混元发布智能体长期记忆插件 Hy-Memory</a></span>
-    <div class="card-meta">
-      <span class="source">腾讯混元</span>
-      <span class="time">昨天 17:01</span>
-    </div>
-    <div class="card-summary">基于6层记忆框架与双系统架构，记忆数量减少70%以上，单条信息密度提升45%+，超长上下文 token 消耗降低35%。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">10</span>
-    <span class="card-title"><a href="https://x.com/NVIDIAAI/status/2061305524700758050" target="_blank">NVIDIA 发布 RTX Spark 及本地 AI 智能体安全更新</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Blog</span>
-      <span class="time">昨天 12:30</span>
-    </div>
-    <div class="card-summary">RTX Spark 专为本地 AI 智能体设计，1 petaflops 算力与 128GB 统一内存。OpenShell 运行时确保设备端安全私密运行，多 token 预测使推理吞吐量最高提升2倍。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">11</span>
-    <span class="card-title"><a href="https://blogs.nvidia.com/blog/factory-operations-fox-blueprint-ai-brain" target="_blank">NVIDIA 发布工厂运营蓝图 FOX</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Blog</span>
-      <span class="time">昨天 13:00</span>
-    </div>
-    <div class="card-summary">自主工厂管理智能体参考设计，富士康利用其构建 MoMClaw 多智能体系统，预计根源分析时间缩短80%，劳动生产率提高15%。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">12</span>
-    <span class="card-title"><a href="https://developer.nvidia.com/..." target="_blank">NVIDIA Vera CPU 为AI工厂智能体工作负载设立新标准</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Technical Blog</span>
-      <span class="time">昨天 11:59</span>
-    </div>
-    <div class="card-summary">Vera CPU 旨在为AI工厂中智能体工作负载树立新性能标杆，覆盖预训练、后训练、测试时缩放和智能体AI四阶段扩展。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">13</span>
-    <span class="card-title"><a href="https://developer.nvidia.com/..." target="_blank">NVIDIA DSX OS：开放、模块化软件用于规模化运营AI工厂</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Technical Blog</span>
-      <span class="time">昨天 11:36</span>
-    </div>
-    <div class="card-summary">DSX 平台为设计、模拟和构建AI工厂提供完整解决方案，覆盖从芯片到应用的五层架构。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">14</span>
-    <span class="card-title"><a href="https://x.com/perplexity_ai/status/2061506359326384319" target="_blank">Perplexity 发布 Search as Code 搜索架构</a></span>
-    <div class="card-meta">
-      <span class="source">Perplexity</span>
-      <span class="time">昨天 01:53</span>
-    </div>
-    <div class="card-summary">全新 AI 智能体搜索架构，直接编写 Python 代码调用搜索栈而非逐个循环函数调用，已在 Perplexity Agent API 中提供。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">15</span>
-    <span class="card-title"><a href="https://x.com/OpenRouter/status/2061476882470580329" target="_blank">OpenRouter Auto Router 新增成本质量权衡参数</a></span>
-    <div class="card-meta">
-      <span class="source">OpenRouter</span>
-      <span class="time">昨天 23:56</span>
-    </div>
-    <div class="card-summary">新增 cost_quality_tradeoff 参数（0-10），设为0时总选最强模型，设为10时选最便宜模型。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">16</span>
-    <span class="card-title"><a href="https://x.com/OpenBMB/status/2061432928492810535" target="_blank">OpenBMB 发布 UltraData 两大开源数据集</a></span>
-    <div class="card-meta">
-      <span class="source">面壁智能 OpenBMB</span>
-      <span class="time">昨天 21:01</span>
-    </div>
-    <div class="card-summary">Ultra-FineWeb-L3（600B+ tokens 预训练数据）和 UltraData-SFT-2605（15M+ SFT 样本），登顶 HuggingFace 全球趋势榜 #1 和 #2。</div>
-  </div>
-</div>
-
-<!-- ==================== 行业动态 ==================== -->
-<div class="section sec-industry">
-  <div class="section-header">
-    <span class="dot"></span>
-    <h2>🏭 行业动态</h2>
-    <span class="count">11 条</span>
-  </div>
-
-  <div class="card">
-    <span class="num">17</span>
-    <span class="card-title"><a href="https://www.anthropic.com/news/confidential-draft-s1-sec" target="_blank">Anthropic 保密向 SEC 提交 S-1 草案，计划 IPO</a></span>
-    <div class="card-meta">
-      <span class="source">Anthropic Newsroom</span>
-      <span class="time">昨天 00:24</span>
-    </div>
-    <div class="card-summary">Anthropic 保密提交 IPO 申请，刚完成 650 亿美元 H 轮融资，估值达 9650 亿美元，并发布了 Claude Opus 4.8 模型。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">18</span>
-    <span class="card-title"><a href="https://openai.com/index/stargate-michigan-data-center" target="_blank">OpenAI 在密歇根州启动 Stargate 1GW 数据中心建设</a></span>
-    <div class="card-meta">
-      <span class="source">OpenAI 官网</span>
-      <span class="time">昨天 20:00</span>
-    </div>
-    <div class="card-summary">Stargate 项目在密歇根州启动，1GW 数据中心，旨在扩大 AI 技术可及性并创造就业机会。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">19</span>
-    <span class="card-title"><a href="https://runwayml.com/news/runway-opens-london-hq" target="_blank">Runway 在伦敦设立欧洲总部及世界模型研究中心</a></span>
-    <div class="card-meta">
-      <span class="source">Runway News</span>
-      <span class="time">昨天 18:24</span>
-    </div>
-    <div class="card-summary">计划18个月向英国AI生态投资1亿美元，世界模型研究将扩展至机器人、科学研究与工业模拟领域。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">20</span>
-    <span class="card-title"><a href="https://runwayml.com/news/introducing-cosmos-coalition" target="_blank">Runway 与 NVIDIA 联合成立 Cosmos Coalition</a></span>
-    <div class="card-meta">
-      <span class="source">Runway News</span>
-      <span class="time">昨天 13:24</span>
-    </div>
-    <div class="card-summary">与 NVIDIA 及多家AI实验室合作，构建并开源面向物理AI的前沿世界模型，首个项目将由 Runway 与 NVIDIA 共同开发基础模型。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">21</span>
-    <span class="card-title"><a href="https://www.ithome.com/0/958/410.htm" target="_blank">美团王兴：AI Agent「小美」将与腾讯元宝深度合作</a></span>
-    <div class="card-meta">
-      <span class="source">IT之家</span>
-      <span class="time">昨天 20:34</span>
-    </div>
-    <div class="card-summary">Q1营收910.39亿元，AI助手「小团」已置于App核心位置，强调面向智能体的服务（To A）日益重要。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">22</span>
-    <span class="card-title"><a href="https://www.ithome.com/0/958/444.htm" target="_blank">智谱：建议 A 股发行并在科创板上市</a></span>
-    <div class="card-meta">
-      <span class="source">IT之家</span>
-      <span class="time">昨天 23:53</span>
-    </div>
-    <div class="card-summary">拟发行占完成后总股本2%-8%的新股，募集资金投资于AI通用基座大模型和MaaS平台，拟更名为"Z.AI Co., Ltd."。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">23</span>
-    <span class="card-title"><a href="https://blogs.nvidia.com/blog/category/enterprise/cloud-2" target="_blank">NVIDIA 与 Google Cloud 助力下一波 AI 构建者</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Blog</span>
-      <span class="time">昨天 13:00</span>
-    </div>
-    <div class="card-summary">深化合作支持超10万名开发者，提供L4 Tensor Core GPU优化推理与图形工作负载，通过Vertex AI增强Gemini模型性能。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">24</span>
-    <span class="card-title"><a href="https://x.com/LumaLabsAI/status/2061460217616027961" target="_blank">Luma 成立开放物理 AI 实验室攻克泛化难题</a></span>
-    <div class="card-meta">
-      <span class="source">Luma AI</span>
-      <span class="time">昨天 22:49</span>
-    </div>
-    <div class="card-summary">为改善人类生活，AI系统必须能改善物理世界。Luma建立新的开放科学物理AI实验室，专注于物理AI泛化问题。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">25</span>
-    <span class="card-title"><a href="https://www.ithome.com/0/957/985.htm" target="_blank">上海「十五五」规划：支持多模态智能体开发与应用</a></span>
-    <div class="card-meta">
-      <span class="source">IT之家</span>
-      <span class="time">昨天 10:16</span>
-    </div>
-    <div class="card-summary">上海发布服务业"十五五"规划，支持多模态智能体开发、智能驾驶多场景应用、MaaS推广及具身智能整机产品开发。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">26</span>
-    <span class="card-title"><a href="https://www.ithome.com/0/957/938.htm" target="_blank">MWC26 上海将举办「人形机器人点球大战」，宇树科技等8队参赛</a></span>
-    <div class="card-meta">
-      <span class="source">IT之家</span>
-      <span class="time">昨天 08:55</span>
-    </div>
-    <div class="card-summary">全球首次人形机器人点球大战，8支中国具身智能战队自主对抗，展示动态平衡、精准控制与自主决策技术突破。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">27</span>
-    <span class="card-title"><a href="https://arstechnica.com/tech-policy/2026/06/florida-sues-openai-sam-altman-after-multiple-chatgpt-linked-murders" target="_blank">佛罗里达州起诉 OpenAI 与 Sam Altman</a></span>
-    <div class="card-meta">
-      <span class="source">Ars Technica</span>
-      <span class="time">昨天 02:52</span>
-    </div>
-    <div class="card-summary">涉多起 ChatGPT 相关谋杀案，佛州总检察长指控 Altman 对人命「完全漠视」。</div>
-  </div>
-</div>
-
-<!-- ==================== 论文研究 ==================== -->
-<div class="section sec-paper">
-  <div class="section-header">
-    <span class="dot"></span>
-    <h2>📄 论文研究</h2>
-    <span class="count">0 条</span>
-  </div>
-  <div class="card" style="text-align:center; color: var(--text-secondary); font-size: 14px;">
-  本时间窗内暂无精选论文条目
-  </div>
-</div>
-
-<!-- ==================== 技巧与观点 ==================== -->
-<div class="section sec-tip">
-  <div class="section-header">
-    <span class="dot"></span>
-    <h2>💡 技巧与观点</h2>
-    <span class="count">12 条</span>
-  </div>
-
-  <div class="card">
-    <span class="num">28</span>
-    <span class="card-title"><a href="https://x.com/AYi_AInotes/status/2061419197154857286" target="_blank">使用 Claude Opus 4.8 将书籍转化为 AI 技能的教程</a></span>
-    <div class="card-meta">
-      <span class="source">阿易 AI Notes</span>
-      <span class="time">昨天 20:06</span>
-    </div>
-    <div class="card-summary">以《非暴力沟通》为例，六步教程：文本准备→全局结构分析→五类提炼（框架/原则/技法/反模式/作者声音）→技能生成→自检。耗时约45分钟，消耗约30万token，成本不到20元。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">29</span>
-    <span class="card-title"><a href="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" target="_blank">超越LLM：为何可扩展的企业AI采用取决于智能体逻辑</a></span>
-    <div class="card-meta">
-      <span class="source">Hugging Face Blog</span>
-      <span class="time">昨天 21:51</span>
-    </div>
-    <div class="card-summary">IBM 研究展示智能体逻辑在大型遗留代码库中比纯LLM基线方法以约30倍更低token消耗达到更优性能，代码覆盖度提升20%-45%。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">30</span>
-    <span class="card-title"><a href="https://www.interconnects.ai/p/open-and-closed-models-are-on-different" target="_blank">开源与闭源模型在不同的增长曲线上</a></span>
-    <div class="card-meta">
-      <span class="source">Nathan Lambert · Interconnects</span>
-      <span class="time">昨天 21:03</span>
-    </div>
-    <div class="card-summary">闭源模型通过特定场景下更高边际智能创造价值，开源模型在其他维度寻找增长点，两者形成差异化竞争格局。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">31</span>
-    <span class="card-title"><a href="https://x.com/MSFTResearch/status/2061440352859361521" target="_blank">微软研究聚焦：智能体评估与价值对齐</a></span>
-    <div class="card-meta">
-      <span class="source">Microsoft Research</span>
-      <span class="time">昨天 21:30</span>
-    </div>
-    <div class="card-summary">大规模评估智能体行为，论证代码库优于文档，邀请全球研究人员共同解决价值对齐问题。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">32</span>
-    <span class="card-title"><a href="https://x.com/googleaidevs/status/2061515177166844317" target="_blank">Google AI 展示并行子智能体自动整理文件</a></span>
-    <div class="card-meta">
-      <span class="source">Google AI for Developers</span>
-      <span class="time">昨天 02:28</span>
-    </div>
-    <div class="card-summary">Antigravity 中的并行子智能体自动对数百个营销资产进行分类和重命名，消除手动文件管理。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">33</span>
-    <span class="card-title"><a href="https://x.com/GeminiApp/status/2061480944905982276" target="_blank">Gemini Omni 支持创建个人数字分身</a></span>
-    <div class="card-meta">
-      <span class="source">Gemini</span>
-      <span class="time">昨天 00:12</span>
-    </div>
-    <div class="card-summary">使用 Gemini Omni 创建外观和声音都像你的数字分身，轻松加入视频创作。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">34</span>
-    <span class="card-title"><a href="https://x.com/OpenRouter/status/2061452942385783050" target="_blank">构建每周千美元预算上限的智能体教程</a></span>
-    <div class="card-meta">
-      <span class="source">OpenRouter</span>
-      <span class="time">昨天 22:20</span>
-    </div>
-    <div class="card-summary">视频教程展示如何使用可堆叠护栏架构：预算限制、ZDR、模型限制、提示词注入防御及敏感信息检测。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">35</span>
-    <span class="card-title"><a href="https://x.com/Baidu_Inc/status/2061447687028039854" target="_blank">AI Pulse 探讨智能体时代新指标 DAA（日活跃智能体）</a></span>
-    <div class="card-meta">
-      <span class="source">百度 Baidu</span>
-      <span class="time">昨天 22:00</span>
-    </div>
-    <div class="card-summary">DAA（Daily Active Agents）作为衡量智能体时代价值的新指标，探讨百度的智能体组合生态。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">36</span>
-    <span class="card-title"><a href="https://x.com/vista8/status/2061443708374208769" target="_blank">作者分享使用 Codex App 开发的开源项目合集</a></span>
-    <div class="card-meta">
-      <span class="source">Vista</span>
-      <span class="time">昨天 21:44</span>
-    </div>
-    <div class="card-summary">包括4个 Chrome 插件、4个网站和5个 AI Skill，基于 GPT-Image-2 API、Suno 等技术构建。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">37</span>
-    <span class="card-title"><a href="https://developer.nvidia.com/blog/how-to-post-train-autonomous-vehicle-models-in-closed-loop-with-nvidia-alpamayo" target="_blank">使用 NVIDIA Alpamayo 在闭环中后训练自动驾驶模型</a></span>
-    <div class="card-meta">
-      <span class="source">NVIDIA Technical Blog</span>
-      <span class="time">昨天 12:49</span>
-    </div>
-    <div class="card-summary">弥合训练与部署之间的鸿沟，NVIDIA Alpamayo 提供闭环环境后训练方法，弥补开放循环训练不考虑实际环境影响的缺陷。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">38</span>
-    <span class="card-title"><a href="https://www.ithome.com/0/958/109.htm" target="_blank">英伟达和台积电将 AI 引入晶圆厂</a></span>
-    <div class="card-meta">
-      <span class="source">IT之家</span>
-      <span class="time">昨天 14:13</span>
-    </div>
-    <div class="card-summary">推动半导体设计与制造智能化转型。</div>
-  </div>
-
-  <div class="card">
-    <span class="num">39</span>
-    <span class="card-title"><a href="https://www.tomtunguz.com/ai-shorts" target="_blank">AI 看跌情绪地图</a></span>
-    <div class="card-meta">
-      <span class="source">Tomer Tunguz 博客</span>
-      <span class="time">昨天 08:00</span>
-    </div>
-    <div class="card-summary">金融市场 AI 看跌情绪从整体上升转向板块分化，AI云公司空头比例最高（16.8%），而 NVIDIA 和超大规模公司极低（1.1%-1.2%）。</div>
+    <div class="card-summary">Anthropic 秘密提交 S-1 草案，估值 9650 亿美元；OpenAI 启动密歇根 Stargate 1GW 数据中心建设；COMPUTEX 2026 开幕，1500 家展商聚焦 AI 运算、机器人与次世代科技。</div>
   </div>
 </div>
 
 <div class="footer">
-  数据来源：<a href="https://aihot.virxact.com" target="_blank">aihot.virxact.com</a> · 时间范围：2026年6月1日 ~ 6月2日（北京时间） · 自动生成于 2026-06-02 03:44
+  宋嘉儀24小时专属助理 · 数据来源：AI HOT + 游戏/硬件实时资讯 · 每日自动更新
 </div>
 
 </div>
