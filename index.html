@@ -45,12 +45,13 @@
   }
 
   .top-bar .brand-row {
-    display: flex; align-items: center; justify-content: center;
-    gap: 6px; margin-bottom: 10px;
+    display: flex; flex-direction: column; align-items: center;
+    margin-bottom: 12px;
   }
   .top-bar .phone-icon {
-    font-size: 22px; cursor: pointer; user-select: none;
+    font-size: 30px; cursor: pointer; user-select: none;
     transition: transform 0.3s ease; line-height: 1;
+    margin-bottom: 4px;
   }
   .phone-icon.pickup { animation: phonePickup 0.8s ease; }
   @keyframes phonePickup {
@@ -112,6 +113,8 @@
     position: relative; width: 100%;
     aspect-ratio: 3/4; overflow: hidden;
   }
+  /* First card: shorter image for visual stagger */
+  .card.first .img-wrap { aspect-ratio: 2/3; }
   .card .img-wrap .bg-gradient {
     position: absolute; inset: 0;
     background: linear-gradient(160deg, #f0e6ff, #e8e0f0, #f5f0fa);
@@ -234,7 +237,7 @@
 <div class="masonry" id="masonry">
 
   <!-- ====== 游戏圈 ====== -->
-  <div class="card game" data-cat="game" data-img="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" data-url="https://news.17173.com/content/06032026/064803381.shtml" data-title="索尼 State of Play 汇总：金刚狼、新战神、古墓丽影重制版等海量新作公布" data-summary="Sony 在 State of Play 上展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭 Townfall 新预告公开，堪称近年来最炸裂的一次发布会，拉开夏季游戏宣发大战序幕。" data-source="17173">
+  <div class="card game first" data-cat="game" data-img="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" data-url="https://news.17173.com/content/06032026/064803381.shtml" data-title="索尼 State of Play 汇总：金刚狼、新战神、古墓丽影重制版等海量新作公布" data-summary="Sony 在 State of Play 上展示了大量重磅游戏：漫威金刚狼深度演示、战神新作菲主演首次亮相、古墓丽影完全重制版确认、寂静岭 Townfall 新预告公开，堪称近年来最炸裂的一次发布会，拉开夏季游戏宣发大战序幕。" data-source="17173">
     <div class="img-wrap"><div class="bg-gradient"></div><img src="" alt="" loading="lazy"><noscript><img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=533&fit=crop&auto=format" alt=""></noscript></div>
     <div class="body"><div class="meta-tag">游戏圈</div><h2>索尼 State of Play：金刚狼、新战神、古墓丽影重制版等海量新作公布</h2><div class="source">17173</div></div>
   </div>
